@@ -11,7 +11,7 @@ const Navbar = ({}) => {
       <nav className="hidden h-full items-center justify-between md:flex">
         <FancyLink title="Home" href="/" className="mr-4" />
         <FancyLink title="Games" href="/games" className="mx-4" />
-        <FancyLink title="Source" href="/source" className="mx-4" />
+        <FancyLink title="Source" href="/source" className="ml-4" />
       </nav>
 
       <ModeToggle />
