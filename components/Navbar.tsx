@@ -6,7 +6,7 @@ const Navbar = ({}) => {
   return (
     <header
       id="navbar"
-      className="sticky top-0 z-10 flex w-full items-center justify-between border bg-accent p-8 font-medium transition-all duration-1000 ease-in-out md:border-b-primary/40 md:px-32"
+      className="sticky top-0 z-10 flex w-full items-center justify-between border bg-secondary p-8 font-medium transition-all duration-1000 ease-in-out md:border-b-accent/80 md:px-32"
     >
       <nav className="hidden h-full items-center justify-between md:flex">
         <FancyLink title="Home" href="/" className="mr-4" />

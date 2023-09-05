@@ -7,78 +7,87 @@ https://realtimecolors.com/?colors=e4e7ec-0a0c0f-d5cdc3-13161b-947f65
 LIGHT
 --text: hsl(216, 20%, 5%);
 --background: hsl(218, 17%, 91%);
+
 --primary: hsl(33, 18%, 80%);
+
 --secondary: hsl(216, 18%, 89%);
+
 --accent: hsl(33, 19%, 19%);
 
-DARK
---text: hsl(218, 17%, 91%);
---background: hsl(216, 20%, 5%);
---primary: hsl(33, 18%, 80%);
---secondary: hsl(218, 17%, 9%);
---accent: hsl(33, 19%, 49%);
+
 */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 218 17% 91%; /* changed*/
+    --foreground: 216 20% 5%; /*changed */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 218 17% 91%; /* changed*/
+    --card-foreground: 216 20% 5%; /*changed */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 218 17% 91%; /* changed*/
+    --popover-foreground: 216 20% 5%; /*changed */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 33 18% 80%; /* changed */
+    --primary-foreground: 216 20% 5%; /* changed */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 216 18% 89%; /* changed */
+    --secondary-foreground: 216 20% 5%; /* changed */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 33 18% 80%%; /* changed */
+    --muted-foreground: 216 20% 5%; /* changed */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 33 19% 19%; /* changed */
+    --accent-foreground: 216 20% 5%; /* changed */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 33 19% 19%; /* changed */
+    --input: 33 19% 19%; /* changed */
+    --ring: 33 19% 49%; /*changed */
 
     --radius: 0.5rem;
   }
 
+  /*
+  DARK
+--text: hsl(218, 17%, 91%);
+--background: hsl(216, 20%, 5%);
+
+--primary: hsl(33, 18%, 80%);
+
+--secondary: hsl(218, 17%, 9%);
+
+--accent: hsl(33, 19%, 49%);
+*/
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 216 20% 5%; /* changed */
+    --foreground: 218 17% 91%; /* changed */
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 216 20% 5%; /* changed */
+    --card-foreground: 218 17% 91%; /* changed */
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 216 20% 5%; /* changed */
+    --popover-foreground: 218 17% 91%; /* changed */
 
-    --primary: 210 40% 98%;
+    --primary: 33 18% 80%; /* changed */
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 218 17% 9%; /* changed */
+    --secondary-foreground: 218 17% 91%; /* changed */
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 33 18% 80%; /* changed */
+    --muted-foreground: 218 17% 91%; /* changed */
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 33 19% 49%; /* changed  */
+    --accent-foreground: 218 17% 91%; /* changed */
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 33 19% 49%; /* changed  */
+    --input: 33 19% 49%; /* changed  */
+    --ring: 33 19% 49%; /* changed  */
   }
 }
 
