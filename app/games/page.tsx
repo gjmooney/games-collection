@@ -1,4 +1,6 @@
+import GameCardList from "@/components/cards/GameCardList";
+
 const page = () => {
-  return <div>page</div>;
+  return <GameCardList />;
 };
 export default page;
