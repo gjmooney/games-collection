@@ -1,3 +1,4 @@
+import { GameInfo } from "@/types/types";
 import {
   Card,
   CardContent,
@@ -7,27 +8,17 @@ import {
   CardTitle,
 } from "../ui/card";
 
-//TODO get type from db schema
-interface GameInfo {
-  game: {
-    title: string;
-    store: string;
-    platform: string;
-    imgUrl: string;
-  };
-}
-
-const GameCard = ({ game }: GameInfo) => {
+const GameCard = ({ name, store, platform, imgUrl }: GameInfo) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{game.title}</CardTitle>
-        <CardDescription>cute lil icon for {game.platform}</CardDescription>
+        <CardTitle>{name}</CardTitle>
+        <CardDescription>cute lil icon for {platform}</CardDescription>
       </CardHeader>
       <CardContent>
         <p>image or placeholder</p>
       </CardContent>
-      <CardFooter>From {game.store}</CardFooter>
+      <CardFooter>From {store}</CardFooter>
     </Card>
   );
 };

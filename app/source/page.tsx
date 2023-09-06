@@ -1,4 +1,6 @@
+import SourceCard from "@/components/cards/SourceCard";
+
 const page = () => {
-  return <div>page</div>;
+  return <SourceCard storeName="Steam" />;
 };
 export default page;
