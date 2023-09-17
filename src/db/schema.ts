@@ -7,6 +7,7 @@ export const users = pgTable("users", {
   username: text("username"),
 });
 
+export type GameInfo = typeof games.$inferInsert;
 export const selectUserSchema = createSelectSchema(users);
 export const insertUserSchema = createInsertSchema(users);
 

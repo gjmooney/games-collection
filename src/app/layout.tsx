@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import Providers from "@/components/Providers";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
@@ -27,9 +28,11 @@ export default function RootLayout({
             inter.className
           )}
         >
-          <Navbar />
-          <div className="flex-auto px-16">{children}</div>
-          <Footer />
+          <Providers>
+            <Navbar />
+            <div className="flex-auto px-16">{children}</div>
+            <Footer />
+          </Providers>
         </body>
       </html>
     </ClerkProvider>

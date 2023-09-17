@@ -15,10 +15,12 @@
     "@neondatabase/serverless": "^0.6.0",
     "@next/env": "^13.4.19",
     "@radix-ui/react-slot": "^1.0.2",
+    "@tanstack/react-query": "^4.35.3",
     "@types/node": "20.6.2",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
+    "axios": "^1.5.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "drizzle-orm": "^0.28.6",
@@ -34,9 +36,11 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^4.34.1",
     "drizzle-kit": "^0.19.13",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.4"
