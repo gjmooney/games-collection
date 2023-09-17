@@ -28,7 +28,7 @@ export default function RootLayout({
           )}
         >
           <Navbar />
-          <div className="flex-auto">{children}</div>
+          <div className="flex-auto px-16">{children}</div>
           <Footer />
         </body>
       </html>
