@@ -23,7 +23,7 @@ const FancyLink = React.forwardRef<HTMLAnchorElement, FancyLinkProps>(
         href={href}
         className={cn(
           "group relative p-0",
-          buttonVariants({ variant: "link", size: "navLink" }),
+          buttonVariants({ variant: "fancyLink", size: "navLink" }),
           className
         )}
       >

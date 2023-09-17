@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -20,9 +21,15 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={cn("antialiased", inter.className)}>
+        <body
+          className={cn(
+            "min-h-screen flex flex-col antialiased",
+            inter.className
+          )}
+        >
           <Navbar />
-          <div className="">{children}</div>
+          <div className="flex-auto">{children}</div>
+          <Footer />
         </body>
       </html>
     </ClerkProvider>
