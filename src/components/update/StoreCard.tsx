@@ -12,9 +12,15 @@ interface StoreCardProps {
   storeName: string;
   imageUrl: string;
   region?: string;
+  apiUrlEndpoint?: string;
 }
 
-const StoreCard = ({ storeName, imageUrl, region }: StoreCardProps) => {
+const StoreCard = ({
+  storeName,
+  imageUrl,
+  region,
+  apiUrlEndpoint,
+}: StoreCardProps) => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -22,7 +28,7 @@ const StoreCard = ({ storeName, imageUrl, region }: StoreCardProps) => {
     mutationFn: async () => {
       // get data from steam api
       const gameDataFromStore = await axios.get<GameInfoInsert[]>(
-        `/api/scrape/${storeName}`
+        `/api/scrape/${apiUrlEndpoint}`
       );
 
       // save data to db

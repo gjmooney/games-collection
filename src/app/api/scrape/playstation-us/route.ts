@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
 
     const cookieName = "pdccws_p";
 
-    const cookie = `${cookieName}=${process.env.PLAYSTATION_COOKIE!}`;
+    const cookie = `${cookieName}=${process.env.PLAYSTATION_US_COOKIE!}`;
 
     const response = await fetch(url, { headers: { Cookie: cookie } });
     const text = await response.json();

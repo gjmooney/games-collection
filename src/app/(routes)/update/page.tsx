@@ -7,24 +7,29 @@ const page = ({}: pageProps) => {
     {
       storeName: "steam",
       imageUrl: "",
+      apiUrlEndpoint: "steam",
     },
     {
       storeName: "humble",
       imageUrl: "",
+      apiUrlEndpoint: "humble",
     },
     {
       storeName: "nintendo",
       imageUrl: "",
+      apiUrlEndpoint: "nintendo",
     },
     {
       storeName: "playstation",
       region: "US",
       imageUrl: "",
+      apiUrlEndpoint: "playstation-us",
     },
     {
       storeName: "playstation",
       region: "EU",
       imageUrl: "",
+      apiUrlEndpoint: "playstation-eu",
     },
   ];
 
@@ -36,6 +41,7 @@ const page = ({}: pageProps) => {
           storeName={store.storeName}
           imageUrl={store.imageUrl}
           region={store.region}
+          apiUrlEndpoint={store.apiUrlEndpoint}
         />
       ))}
     </main>
