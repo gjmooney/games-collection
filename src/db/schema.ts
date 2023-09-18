@@ -65,7 +65,8 @@ export const usersToGamesRelations = relations(usersToGames, ({ one }) => ({
   }),
 }));
 
-export type GameInfo = typeof games.$inferInsert;
+export type GameInfoInsert = typeof games.$inferInsert;
+export type GameInfoSelect = typeof games.$inferSelect;
 export const InsertGameSchema = createInsertSchema(games);
 
 export type UserInfo = typeof users.$inferInsert;
