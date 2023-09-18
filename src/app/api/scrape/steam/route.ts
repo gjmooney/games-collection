@@ -33,8 +33,6 @@ export async function GET(req: NextRequest) {
         }) satisfies GameInfoInsert
     );
 
-    //const numberOfGamesAdded = await updateGames(steamGames);
-
     return NextResponse.json(steamGames);
   } catch (error: any) {
     // Type parsing error

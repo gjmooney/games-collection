@@ -5,15 +5,15 @@ interface pageProps {}
 const page = ({}: pageProps) => {
   const storeFronts = [
     {
-      storeName: "Steam",
+      storeName: "steam",
       imageUrl: "",
     },
     {
-      storeName: "Humble",
+      storeName: "humble",
       imageUrl: "",
     },
     {
-      storeName: "Nintendo",
+      storeName: "nintendo",
       imageUrl: "",
     },
   ];

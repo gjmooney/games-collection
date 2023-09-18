@@ -20,14 +20,18 @@ const StoreCard = ({ storeName, imageUrl }: StoreCardProps) => {
   const { mutate: fetchGames } = useMutation({
     mutationFn: async () => {
       // get data from steam api
-      const steamData = await axios.get<GameInfoInsert[]>("/api/scrape/steam");
+      const gameDataFromStore = await axios.get<GameInfoInsert[]>(
+        `/api/scrape/${storeName}`
+      );
 
       // save data to db
-      const numberInserted = await axios.post("/api/update", steamData);
-      console.log(numberInserted);
+      const numberInserted = await axios.post("/api/update", gameDataFromStore);
       return numberInserted.data;
     },
+
     onError: (error) => {
+      console.log("error", error);
+
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
           return toast({
@@ -44,6 +48,7 @@ const StoreCard = ({ storeName, imageUrl }: StoreCardProps) => {
         variant: "destructive",
       });
     },
+
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["games-list"] });
       toast({
@@ -56,7 +61,7 @@ const StoreCard = ({ storeName, imageUrl }: StoreCardProps) => {
   return (
     <Card className="bg-secondary border w-52 flex items-center justify-center flex-col">
       <CardHeader>
-        <CardTitle>{storeName}</CardTitle>
+        <CardTitle className="capitalize">{storeName}</CardTitle>
       </CardHeader>
       <CardContent>
         <Button onClick={() => fetchGames()}>Update</Button>
