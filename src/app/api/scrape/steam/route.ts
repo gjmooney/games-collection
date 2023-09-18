@@ -1,4 +1,4 @@
-import { GameInfo } from "@/db/schema";
+import { GameInfoInsert } from "@/db/schema";
 import { steamApiValidator } from "@/lib/validators";
 import { auth } from "@clerk/nextjs";
 import axios from "axios";
@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
           store: "Steam",
           platform: "PC",
           imgUrl: `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`,
-        }) satisfies GameInfo
+        }) satisfies GameInfoInsert
     );
 
     //const numberOfGamesAdded = await updateGames(steamGames);
