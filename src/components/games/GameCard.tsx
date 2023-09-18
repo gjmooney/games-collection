@@ -10,7 +10,7 @@ interface GameCardProps {
 
 const GameCard = ({ gameName, imgUrl, platform, store }: GameCardProps) => {
   return (
-    <Card>
+    <Card className="bg-secondary">
       <CardHeader>
         <CardTitle className="flex items-center gap-4 text-lg">
           {imgUrl ? (
