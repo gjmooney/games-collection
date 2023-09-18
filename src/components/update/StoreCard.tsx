@@ -2,8 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { GameInfo } from "@/db/schema";
-import { useMutation } from "@tanstack/react-query";
+import { GameInfoInsert } from "@/db/schema";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
@@ -14,11 +14,13 @@ interface StoreCardProps {
 }
 
 const StoreCard = ({ storeName, imageUrl }: StoreCardProps) => {
+  const queryClient = useQueryClient();
   const { toast } = useToast();
+
   const { mutate: fetchGames } = useMutation({
     mutationFn: async () => {
       // get data from steam api
-      const steamData = await axios.get<GameInfo[]>("/api/scrape/steam");
+      const steamData = await axios.get<GameInfoInsert[]>("/api/scrape/steam");
 
       // save data to db
       const numberInserted = await axios.post("/api/update", steamData);
@@ -43,6 +45,7 @@ const StoreCard = ({ storeName, imageUrl }: StoreCardProps) => {
       });
     },
     onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["games-list"] });
       toast({
         title: "Success",
         description: `Inserted ${data} games`,
