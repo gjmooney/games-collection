@@ -16,15 +16,26 @@ const page = ({}: pageProps) => {
       storeName: "nintendo",
       imageUrl: "",
     },
+    {
+      storeName: "playstation",
+      region: "US",
+      imageUrl: "",
+    },
+    {
+      storeName: "playstation",
+      region: "EU",
+      imageUrl: "",
+    },
   ];
 
   return (
-    <main className="flex gap-9 items-center justify-around">
+    <main className="flex gap-9 items-center flex-wrap justify-around">
       {storeFronts.map((store) => (
         <StoreCard
           key={store.storeName}
           storeName={store.storeName}
           imageUrl={store.imageUrl}
+          region={store.region}
         />
       ))}
     </main>

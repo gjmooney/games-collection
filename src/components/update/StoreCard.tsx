@@ -11,9 +11,10 @@ import { useToast } from "../ui/use-toast";
 interface StoreCardProps {
   storeName: string;
   imageUrl: string;
+  region?: string;
 }
 
-const StoreCard = ({ storeName, imageUrl }: StoreCardProps) => {
+const StoreCard = ({ storeName, imageUrl, region }: StoreCardProps) => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -59,9 +60,11 @@ const StoreCard = ({ storeName, imageUrl }: StoreCardProps) => {
   });
 
   return (
-    <Card className="bg-secondary border w-52 flex items-center justify-center flex-col">
+    <Card className="bg-secondary border w-56 flex items-center justify-center flex-col">
       <CardHeader>
-        <CardTitle className="capitalize">{storeName}</CardTitle>
+        <CardTitle className="capitalize">
+          {storeName} {region && <span>{region}</span>}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <Button onClick={() => fetchGames()}>Update</Button>
