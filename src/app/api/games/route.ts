@@ -21,6 +21,7 @@ export async function GET(req: NextRequest) {
 
     const gamesFromDb = await db
       .select({
+        id: games.id,
         gameName: games.gameName,
         platform: games.platform,
         imgUrl: games.imgUrl,

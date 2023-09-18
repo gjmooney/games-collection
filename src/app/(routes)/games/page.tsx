@@ -18,7 +18,6 @@ const GamesListPage = ({}: GamesListPageProps) => {
     queryFn: async () => {
       const gamesListFromDb = await axios.get<GameInfoSelect[]>("/api/games");
 
-      console.log("gamesListFromDb", gamesListFromDb.data);
       return gamesListFromDb.data;
     },
   });
