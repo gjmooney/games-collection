@@ -14,7 +14,13 @@ const GameCard = ({ gameName, imgUrl, platform, store }: GameCardProps) => {
       <CardHeader>
         <CardTitle className="flex items-center gap-4 text-lg">
           {imgUrl ? (
-            <Image src={imgUrl} alt="game image" width={24} height={24} />
+            <Image
+              src={imgUrl}
+              alt="game image"
+              width={24}
+              height={24}
+              className="rounded-md"
+            />
           ) : null}{" "}
           {gameName}
         </CardTitle>

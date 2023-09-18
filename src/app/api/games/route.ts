@@ -17,8 +17,6 @@ export async function GET(req: NextRequest) {
       .from(users)
       .where(eq(users.clerkId, clerkId));
 
-    console.log("user", user);
-
     const gamesFromDb = await db
       .select({
         id: games.id,
