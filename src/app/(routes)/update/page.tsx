@@ -18,10 +18,6 @@ const page = ({}: pageProps) => {
     },
   ];
 
-  const handleClick = () => {
-    console.log("first");
-  };
-
   return (
     <main className="flex gap-9 items-center justify-around">
       {storeFronts.map((store) => (
