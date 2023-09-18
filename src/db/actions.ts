@@ -1,9 +1,9 @@
 import { auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 import db from "./db";
-import { games, users, usersToGames } from "./schema";
+import { GameInfo, games, users, usersToGames } from "./schema";
 
-export const updateGames = async (gamesToInsert: any) => {
+export const updateGames = async (gamesToInsert: GameInfo[]) => {
   const { userId: clerkId } = auth();
   const arr = gamesToInsert.splice(0, 4);
 
