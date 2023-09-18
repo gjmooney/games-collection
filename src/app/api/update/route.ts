@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
       return new Response("Invalid request data passed", { status: 422 });
     }
 
+    console.log("error", error);
     return new Response("Could not update database", { status: 500 });
   }
 }

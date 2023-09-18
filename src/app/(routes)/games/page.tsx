@@ -1,5 +1,6 @@
 "use client";
 
+import { GameInfo } from "@/db/schema";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -9,7 +10,7 @@ const GamesListPage = ({}: GamesListPageProps) => {
   const { data, isError, isLoading, error } = useQuery({
     queryKey: ["games-list"],
     queryFn: async () => {
-      const gamesList = await axios.get("/api/games");
+      const gamesList = await axios.get<GameInfo[]>("/api/games");
 
       console.log("gamesList", gamesList);
       return gamesList.data;
