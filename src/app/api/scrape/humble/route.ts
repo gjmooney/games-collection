@@ -1,3 +1,4 @@
+import { convertTimeToDouble } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer from "puppeteer";
@@ -15,15 +16,13 @@ export async function GET(req: NextRequest) {
 
     const url = "https://www.humblebundle.com/home/library";
 
-    const dateString = "2023-12-02T12:53:25.000Z";
-    const timestampInMilliseconds = Date.parse(dateString);
-    const timestampInSeconds = timestampInMilliseconds / 1000;
+    const expiration = convertTimeToDouble("2023-12-02T12:53:25.000Z");
 
     const cookieVal = [
       {
         name: "_simpleauth_sess",
         domain: ".humblebundle.com",
-        expires: timestampInSeconds,
+        expires: expiration,
         httpOnly: true,
         path: "/",
         samesite: "None",
