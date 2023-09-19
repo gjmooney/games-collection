@@ -15,7 +15,6 @@ export async function GET(req: NextRequest) {
     }
 
     const { searchParams } = new URL(req.url);
-    console.log("searchParams", searchParams);
     const cursor = searchParams.get("cursor");
 
     const user = await db
@@ -43,7 +42,6 @@ export async function GET(req: NextRequest) {
             gt(games.id, parseInt(cursor)) // gt is like a skip 1
           )
         )
-
         .limit(LIMIT);
     } else {
       gamesFromDb = await db
@@ -67,7 +65,6 @@ export async function GET(req: NextRequest) {
     if (gamesFromDb.length === LIMIT) {
       nextCursor = gamesFromDb[LIMIT - 1].id;
     }
-    console.log("nextCursor", nextCursor);
 
     return NextResponse.json({ gamesFromDb, nextCursor });
   } catch (error) {
