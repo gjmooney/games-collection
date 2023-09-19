@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import Providers from "@/components/Providers";
+import QueryProvider from "@/components/providers/QueryProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -29,12 +30,19 @@ export default function RootLayout({
             inter.className
           )}
         >
-          <Providers>
-            <Navbar />
-            <div className="flex-auto container">{children}</div>
-            <Toaster />
-            <Footer />
-          </Providers>
+          <QueryProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Navbar />
+              <div className="flex-auto container">{children}</div>
+              <Toaster />
+              <Footer />
+            </ThemeProvider>
+          </QueryProvider>
         </body>
       </html>
     </ClerkProvider>

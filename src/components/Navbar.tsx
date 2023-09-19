@@ -1,11 +1,12 @@
 import { UserButton } from "@clerk/nextjs";
+import { ModeToggle } from "./ModeToggle";
 import FancyLink from "./animations/FancyLink";
 
 const Navbar = ({}) => {
   return (
     <header
       id="navbar"
-      className="sticky top-0 z-10 flex w-full items-center justify-between border-b-2 border-primary/20 bg-secondary p-6 font-medium transition-all duration-1000 ease-in-out md:px-32 mb-16"
+      className="sticky top-0 z-10 flex w-full items-center justify-between border-b-2 border-primary/20 bg-secondary p-4 font-medium transition-all duration-1000 ease-in-out md:px-32 mb-16"
     >
       <nav className="hidden h-full items-center justify-between md:flex">
         <FancyLink title="Home" href="/" className="mr-4" />
@@ -14,7 +15,7 @@ const Navbar = ({}) => {
       </nav>
 
       <UserButton />
-      {/* <ModeToggle /> */}
+      <ModeToggle />
     </header>
   );
 };
