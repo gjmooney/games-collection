@@ -43,7 +43,6 @@ const GamesListPage = ({}: GamesListPageProps) => {
 
   useEffect(() => {
     if (entry?.isIntersecting && !isFetchingNextPage && !!hasNextPage) {
-      console.log("infinite");
       fetchNextPage();
     }
   }, [entry, fetchNextPage, hasNextPage, isFetchingNextPage]);
