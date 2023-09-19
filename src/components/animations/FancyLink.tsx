@@ -30,7 +30,7 @@ const FancyLink = React.forwardRef<HTMLAnchorElement, FancyLinkProps>(
         {title}
         <span
           className={cn(
-            "absolute -bottom-0.5 left-0 h-[1px] bg-secondary-foreground duration-300 ease-in-out group-hover:w-full",
+            "absolute -bottom-0.5 left-0 h-[1px] bg-secondary-foreground duration-300 ease-in-out group-hover:w-full group-focus:w-0",
             pathname === href ? "h-[1.5px] w-full" : "w-0"
           )}
         />
