@@ -5,6 +5,7 @@ const nextConfig = {
       "media.steampowered.com",
       "hb.imgix.net",
       "image.api.playstation.com",
+      "agst.prod.dl.playstation.net",
     ],
   },
 };

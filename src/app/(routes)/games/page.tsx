@@ -17,7 +17,6 @@ type InfiniteQueryResponseData = {
 
 const GamesListPage = ({}: GamesListPageProps) => {
   const bottomRef = useRef<HTMLDivElement>(null);
-  //const topRef = useRef<HTMLDivElement>(null);
 
   const {
     data,
@@ -48,30 +47,6 @@ const GamesListPage = ({}: GamesListPageProps) => {
       fetchNextPage();
     }
   }, [entry, fetchNextPage, hasNextPage, isFetchingNextPage]);
-
-  /* useEffect(() => {
-    const bottomDiv = topRef?.current;
-
-    const handleScroll = () => {
-      const scrollBottom = bottomDiv?.scrollTop;
-      console.log("bottomDiv?.scrollTop", bottomDiv?.scrollTop);
-
-      if (
-        window.innerHeight + document.documentElement.scrollTop !==
-          document.documentElement.offsetHeight &&
-        !isFetchingNextPage &&
-        !!hasNextPage
-      ) {
-        fetchNextPage();
-      }
-    };
-
-    window?.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window?.removeEventListener("scroll", handleScroll);
-    };
-  }, [topRef, fetchNextPage, hasNextPage, isFetchingNextPage]); */
 
   return status === "loading" ? (
     <p>Loading...</p>
@@ -110,9 +85,7 @@ const GamesListPage = ({}: GamesListPageProps) => {
           )}
         </div>
       )}
-      <div className="bg-green-600" ref={ref}>
-        sdsd
-      </div>
+      <div ref={ref} />
     </main>
   );
 };
