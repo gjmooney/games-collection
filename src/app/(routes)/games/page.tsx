@@ -2,6 +2,7 @@
 
 import GameCard from "@/components/games/GameCard";
 import { GameInfoSelect } from "@/db/schema";
+import { useIntersection } from "@/hooks/useIntersection";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
@@ -16,7 +17,7 @@ type InfiniteQueryResponseData = {
 
 const GamesListPage = ({}: GamesListPageProps) => {
   const bottomRef = useRef<HTMLDivElement>(null);
-  const topRef = useRef<HTMLDivElement>(null);
+  //const topRef = useRef<HTMLDivElement>(null);
 
   const {
     data,
@@ -36,7 +37,19 @@ const GamesListPage = ({}: GamesListPageProps) => {
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
   });
 
+  const { ref, entry } = useIntersection({
+    root: bottomRef.current,
+    threshold: 1,
+  });
+
   useEffect(() => {
+    if (entry?.isIntersecting && !isFetchingNextPage && !!hasNextPage) {
+      console.log("infinite");
+      fetchNextPage();
+    }
+  }, [entry, fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  /* useEffect(() => {
     const bottomDiv = topRef?.current;
 
     const handleScroll = () => {
@@ -58,7 +71,7 @@ const GamesListPage = ({}: GamesListPageProps) => {
     return () => {
       window?.removeEventListener("scroll", handleScroll);
     };
-  }, [topRef, fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [topRef, fetchNextPage, hasNextPage, isFetchingNextPage]); */
 
   return status === "loading" ? (
     <p>Loading...</p>
@@ -66,10 +79,7 @@ const GamesListPage = ({}: GamesListPageProps) => {
     <p>Error: {error?.message}</p>
   ) : (
     <main className="flex flex-col">
-      <div
-        ref={topRef}
-        className="flex flex-wrap gap-9 items-center justify-around"
-      >
+      <div className="flex flex-wrap gap-9 items-center justify-around">
         {data?.pages?.map((page, i) => (
           <Fragment key={i}>
             {page?.gamesFromDb.map((game: GameInfoSelect) => (
@@ -100,7 +110,7 @@ const GamesListPage = ({}: GamesListPageProps) => {
           )}
         </div>
       )}
-      <div className="bg-green-600" ref={bottomRef}>
+      <div className="bg-green-600" ref={ref}>
         sdsd
       </div>
     </main>
