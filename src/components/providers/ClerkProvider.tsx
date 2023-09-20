@@ -1,5 +1,6 @@
 import { ClerkProvider as Clerk } from "@clerk/nextjs";
 
+//TODO: Set up clerk webhooks for new user creation
 const ClerkProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <Clerk
@@ -15,7 +16,7 @@ const ClerkProvider = ({ children }: { children: React.ReactNode }) => {
           dividerText: "text-card-foreground",
           formFieldLabel: "text-card-foreground",
           formFieldInput:
-            "border-input bg-background/80 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            "border-input text-foreground bg-background/80 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
           formButtonPrimary:
             "bg-primary text-primary-foreground ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
           footerActionText:

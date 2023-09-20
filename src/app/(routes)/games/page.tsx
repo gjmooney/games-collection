@@ -5,6 +5,7 @@ import GamesList from "@/components/games/GamesList";
 import { Input } from "@/components/ui/input";
 import { GameInfoSelect } from "@/db/schema";
 import { useDebounceCallback } from "@/hooks/useDebounce";
+import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
@@ -32,30 +33,35 @@ const GamesListPage = ({}: GamesListPageProps) => {
 
   return (
     <main className="px-16">
-      <Input
-        placeholder="Search for a game..."
-        onChange={(event) => {
-          setValue(event.currentTarget.value);
-          request();
-        }}
-        className="mb-16"
-      />
+      <SignedOut>
+        <RedirectToSignIn />
+      </SignedOut>
+      <SignedIn>
+        <Input
+          placeholder="Search for a game..."
+          onChange={(event) => {
+            setValue(event.currentTarget.value);
+            request();
+          }}
+          className="mb-16"
+        />
 
-      <div className="flex flex-wrap gap-9 items-center justify-around">
-        {value.length > 0 ? (
-          queryResults?.map((game: GameInfoSelect) => (
-            <GameCard
-              key={game.id}
-              gameName={game.gameName}
-              store={game.store}
-              platform={game.platform}
-              imgUrl={game.imgUrl}
-            />
-          ))
-        ) : (
-          <GamesList />
-        )}
-      </div>
+        <div className="flex flex-wrap gap-9 items-center justify-around">
+          {value.length > 0 ? (
+            queryResults?.map((game: GameInfoSelect) => (
+              <GameCard
+                key={game.id}
+                gameName={game.gameName}
+                store={game.store}
+                platform={game.platform}
+                imgUrl={game.imgUrl}
+              />
+            ))
+          ) : (
+            <GamesList />
+          )}
+        </div>
+      </SignedIn>
     </main>
   );
 };
