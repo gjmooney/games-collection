@@ -4,7 +4,8 @@ import QueryProvider from "@/components/providers/QueryProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
-import { ClerkProvider } from "@clerk/nextjs";
+
+import ClerkProvider from "@/components/providers/ClerkProvider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
