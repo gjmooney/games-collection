@@ -1,39 +1,66 @@
 import db from "@/db/db";
 import { users } from "@/db/schema";
-import { currentUser, redirectToSignIn } from "@clerk/nextjs";
-import { eq } from "drizzle-orm";
-import { NextResponse } from "next/server";
+import { UserJSON, WebhookEvent } from "@clerk/nextjs/server";
+import { headers } from "next/headers";
+import { Webhook } from "svix";
 
-/**
- * Post sign-up page to add user to our DB
- * @returns A redirect to the homepage
- */
+export async function POST(req: Request) {
+  // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
+  const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
 
-export async function GET() {
-  console.log("new user page");
-  const user = await currentUser();
-
-  if (!user) {
-    return redirectToSignIn();
+  if (!WEBHOOK_SECRET) {
+    throw new Error(
+      "Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local"
+    );
   }
 
-  const profile = await db
-    .select()
-    .from(users)
-    .where(eq(users.clerkId, user.id));
+  // Get the headers
+  const headerPayload = headers();
+  const svix_id = headerPayload.get("svix-id");
+  const svix_timestamp = headerPayload.get("svix-timestamp");
+  const svix_signature = headerPayload.get("svix-signature");
 
-  console.log("profile", profile);
-
-  if (profile.length !== 0) {
-    return NextResponse.redirect("http://localhost:3000/update");
+  // If there are no headers, error out
+  if (!svix_id || !svix_timestamp || !svix_signature) {
+    return new Response("Error occurred -- no svix headers", {
+      status: 400,
+    });
   }
+
+  // Get the body
+  const payload = await req.json();
+  const body = JSON.stringify(payload);
+
+  // Create a new SVIX instance with your secret.
+  const wh = new Webhook(WEBHOOK_SECRET);
+
+  let evt: WebhookEvent;
+
+  // Verify the payload with the headers
+  try {
+    evt = wh.verify(body, {
+      "svix-id": svix_id,
+      "svix-timestamp": svix_timestamp,
+      "svix-signature": svix_signature,
+    }) as WebhookEvent;
+  } catch (err) {
+    console.error("Error verifying webhook:", err);
+    return new Response("Error occured", {
+      status: 400,
+    });
+  }
+
+  // Get the ID and type
+  const { id, username } = evt.data as UserJSON;
+  const eventType = evt.type;
 
   await db
     .insert(users)
-    .values({ clerkId: user.id, username: user.username })
+    .values({ clerkId: id, username: username })
     .onConflictDoNothing();
 
-  const url = new URL("http://localhost:3000/");
+  console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
+  console.log("Webhook body:", body);
 
-  return NextResponse.redirect(url);
+  return new Response("", { status: 201 });
 }
