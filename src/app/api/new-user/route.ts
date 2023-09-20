@@ -1,6 +1,7 @@
 import db from "@/db/db";
 import { users } from "@/db/schema";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser, redirectToSignIn } from "@clerk/nextjs";
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 /**
@@ -9,11 +10,22 @@ import { NextResponse } from "next/server";
  */
 
 export async function GET() {
-  console.log("wtf");
+  console.log("new user page");
   const user = await currentUser();
 
   if (!user) {
-    return new Response("nope");
+    return redirectToSignIn();
+  }
+
+  const profile = await db
+    .select()
+    .from(users)
+    .where(eq(users.clerkId, user.id));
+
+  console.log("profile", profile);
+
+  if (profile.length !== 0) {
+    return NextResponse.redirect("http://localhost:3000/update");
   }
 
   await db
