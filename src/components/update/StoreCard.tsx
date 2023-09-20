@@ -66,7 +66,7 @@ const StoreCard = ({
   });
 
   return (
-    <Card className="bg-secondary border w-56 flex items-center justify-center flex-col">
+    <Card className="border w-56 flex items-center justify-center flex-col">
       <CardHeader>
         <CardTitle className="capitalize">
           {storeName} {region && <span>{region}</span>}

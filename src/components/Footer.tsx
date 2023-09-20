@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="mt-16 flex flex-col items-center justify-between border-t-2 border-primary/20 p-8 text-lg font-medium md:flex-row">
+    <footer className="mt-16 flex flex-col items-center justify-between border-t-2 border-accent/20 p-8 text-lg font-medium md:flex-row">
       <span className="">
         {new Date().getFullYear()} &copy; All Rights Reserved.
       </span>
