@@ -1,11 +1,8 @@
-import { GameInfoInsert } from "@/db/schema";
-import { steamApiValidator } from "@/lib/validators";
-import { auth } from "@clerk/nextjs";
-import axios from "axios";
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import puppeteer from "puppeteer";
 import { convertTimeToDouble } from "@/lib/utils";
+import { auth } from "@clerk/nextjs";
+import { NextRequest, NextResponse } from "next/server";
+import puppeteer from "puppeteer";
+import { z } from "zod";
 
 // TODO toast
 export async function GET(req: NextRequest) {

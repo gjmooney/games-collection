@@ -30,6 +30,7 @@ export const games = pgTable(
     imgUrl: text("img_url"),
     createdAt: timestamp("created_at").defaultNow(),
   },
+
   (t) => ({
     gameOnPlatform: unique("game_on_platform").on(t.gameName, t.platform),
   })
@@ -44,10 +45,10 @@ export const usersToGames = pgTable(
   {
     userId: integer("user_id")
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     gameId: integer("game_id")
       .notNull()
-      .references(() => games.id),
+      .references(() => games.id, { onDelete: "cascade" }),
   },
   (t) => ({
     pk: primaryKey(t.userId, t.gameId),

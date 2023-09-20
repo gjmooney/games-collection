@@ -11,11 +11,6 @@ import { useState } from "react";
 
 interface GamesListPageProps {}
 
-type InfiniteQueryResponseData = {
-  gamesFromDb: GameInfoSelect[];
-  nextCursor: number | null;
-};
-
 const GamesListPage = ({}: GamesListPageProps) => {
   const [value, setValue] = useState("");
 
@@ -33,7 +28,7 @@ const GamesListPage = ({}: GamesListPageProps) => {
     },
   });
 
-  const request = useDebounceCallback(refetch, 1000);
+  const request = useDebounceCallback(refetch, 500);
 
   return (
     <main className="px-16">

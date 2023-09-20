@@ -3,7 +3,6 @@ import { InsertGameSchema, games, users, usersToGames } from "@/db/schema";
 import { auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 
 export async function POST(req: NextRequest) {
   try {
@@ -48,10 +47,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(arr.length);
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return new Response("Invalid request data passed", { status: 422 });
-    }
-
     console.log("error", error);
     return new Response("Could not update database", { status: 500 });
   }
