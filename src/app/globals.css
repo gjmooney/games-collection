@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* https://realtimecolors.com/?colors=080708-e9e7e9-98a49a-eceeee-373e38 */
 @layer base {
   :root {
     --background: 300 4% 91%;

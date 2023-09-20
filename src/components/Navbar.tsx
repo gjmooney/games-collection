@@ -14,8 +14,10 @@ const Navbar = ({}) => {
         <FancyLink title="Update" href="/update" className="ml-4" />
       </nav>
 
-      <UserButton />
-      <ModeToggle />
+      <div className="flex gap-4">
+        <UserButton afterSignOutUrl="/" />
+        <ModeToggle />
+      </div>
     </header>
   );
 };

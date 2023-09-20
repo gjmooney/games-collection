@@ -13,7 +13,7 @@ interface GameCardProps {
  */
 const GameCard = ({ gameName, imgUrl, platform, store }: GameCardProps) => {
   return (
-    <Card className="">
+    <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-4 text-lg">
           {platform !== "PS5" && imgUrl ? (
