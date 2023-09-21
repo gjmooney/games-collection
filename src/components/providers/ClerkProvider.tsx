@@ -21,6 +21,16 @@ const ClerkProvider = ({ children }: { children: React.ReactNode }) => {
             "bg-primary text-primary-foreground ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
           footerActionText:
             "text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border-input",
+          userButtonPopoverCard: "border-border",
+          userPreviewTextContainer: "text-card-foreground",
+          userPreviewSecondaryIdentifier: "text-card-foreground",
+          userButtonPopoverActionButton:
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible",
+          userButtonPopoverActionButtonText:
+            "text-card-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible",
+          userButtonPopoverActionButtonIcon:
+            "text-card-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible",
+          userButtonPopoverFooter: "text-card-foreground",
         },
         variables: {
           colorPrimary: "hsl(130, 6%, 62%)",
