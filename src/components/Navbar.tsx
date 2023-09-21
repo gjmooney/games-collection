@@ -1,6 +1,7 @@
-import { UserButton } from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { ModeToggle } from "./ModeToggle";
 import FancyLink from "./animations/FancyLink";
+import { Button } from "./ui/button";
 
 const Navbar = ({}) => {
   return (
@@ -15,7 +16,14 @@ const Navbar = ({}) => {
       </nav>
 
       <div className="flex gap-4">
-        <UserButton afterSignOutUrl="/" />
+        <SignedIn>
+          <UserButton afterSignOutUrl="/" />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton>
+            <Button size={"navLink"}>Sign In</Button>
+          </SignInButton>
+        </SignedOut>
         <ModeToggle />
       </div>
     </header>
