@@ -5,6 +5,7 @@ import { and, asc, eq, gt } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 const LIMIT = 10;
+export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   try {
