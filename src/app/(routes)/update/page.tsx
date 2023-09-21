@@ -1,5 +1,4 @@
 import StoreCard from "@/components/update/StoreCard";
-import { RedirectToSignIn, currentUser } from "@clerk/nextjs";
 
 interface pageProps {}
 
