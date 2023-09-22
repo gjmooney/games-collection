@@ -6,6 +6,7 @@ import { GameInfoInsert } from "@/db/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { Info } from "lucide-react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 import {
   Tooltip,
@@ -30,6 +31,8 @@ const StoreCard = ({
 }: StoreCardProps) => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
+
+  const [value, setValue] = useState("");
 
   const { mutate: fetchGames, isLoading } = useMutation({
     mutationFn: async () => {
@@ -84,12 +87,12 @@ const StoreCard = ({
   return (
     <Card className="border w-56 flex items-center justify-center flex-col">
       <CardHeader>
-        <CardTitle className="capitalize">
-          <div className="flex gap-4 items-center justify-center">
+        <CardTitle>
+          <div className="flex gap-3 items-center justify-center">
             <span>
               {storeName} {region && <span>{region}</span>}
             </span>
-            {storeName === "Itch.io" ? (
+            {storeName === "Itch.io" && (
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
@@ -102,7 +105,7 @@ const StoreCard = ({
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
-            ) : null}
+            )}
           </div>
         </CardTitle>
       </CardHeader>
