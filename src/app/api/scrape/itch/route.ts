@@ -5,7 +5,6 @@ import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-// TODO toast
 export async function GET(req: NextRequest) {
   try {
     const { userId } = auth();
