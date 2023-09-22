@@ -5,7 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { GameInfoInsert } from "@/db/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
+import { Info } from "lucide-react";
 import { Button } from "../ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 import { useToast } from "../ui/use-toast";
 
 interface StoreCardProps {
@@ -56,8 +63,6 @@ const StoreCard = ({
             variant: "destructive",
           });
         }
-
-        
       }
 
       return toast({
@@ -80,7 +85,25 @@ const StoreCard = ({
     <Card className="border w-56 flex items-center justify-center flex-col">
       <CardHeader>
         <CardTitle className="capitalize">
-          {storeName} {region && <span>{region}</span>}
+          <div className="flex gap-4 items-center justify-center">
+            <span>
+              {storeName} {region && <span>{region}</span>}
+            </span>
+            {storeName === "Itch.io" ? (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info className="w-4 h-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="normal-case">
+                      This only gets the one bundle for now.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            ) : null}
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent>
