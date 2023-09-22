@@ -24,7 +24,7 @@ const StoreCard = ({
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  const { mutate: fetchGames } = useMutation({
+  const { mutate: fetchGames, isLoading } = useMutation({
     mutationFn: async () => {
       // get data from steam api
       const gameDataFromStore = await axios.get<GameInfoInsert[]>(
@@ -37,9 +37,10 @@ const StoreCard = ({
     },
 
     onError: (error) => {
-      console.log("error", error);
+      console.log(" store card error", error);
 
       if (error instanceof AxiosError) {
+        console.log("axios");
         if (error.response?.status === 401) {
           return toast({
             title: "There was a problem",
@@ -55,6 +56,8 @@ const StoreCard = ({
             variant: "destructive",
           });
         }
+
+        
       }
 
       return toast({
@@ -81,7 +84,9 @@ const StoreCard = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Button onClick={() => fetchGames()}>Update</Button>
+        <Button disabled={isLoading} onClick={() => fetchGames()}>
+          Update
+        </Button>
       </CardContent>
     </Card>
   );

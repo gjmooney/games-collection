@@ -1,7 +1,7 @@
 import { convertTimeToDouble } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
-import puppeteer from "puppeteer";
+import puppeteer, { TimeoutError } from "puppeteer";
 import { z } from "zod";
 
 // TODO toast
@@ -47,6 +47,7 @@ export async function GET(req: NextRequest) {
 
     // Go through those containers for name and image URL
     const humbleGames = [];
+
     for (let i = 0; i < gameContainer.length; i++) {
       const title = await gameContainer[i].$eval(
         "div.text-holder > h2",
@@ -68,14 +69,17 @@ export async function GET(req: NextRequest) {
     // Clean up
     await browser.close();
 
-    console.log("humbleGames", humbleGames);
-
     return NextResponse.json(humbleGames);
   } catch (error: any) {
     // Type parsing error
     if (error instanceof z.ZodError) {
       return new Response("[PARSE_ERROR]" + error.message, { status: 422 });
     }
+
+    if (error instanceof TimeoutError) {
+      return new Response("The request timed out", { status: 403 });
+    }
+
     console.log("ERROR", error.message);
     return new Response("Something went wrong", { status: 500 });
   }
