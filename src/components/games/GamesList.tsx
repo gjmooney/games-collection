@@ -48,7 +48,9 @@ const GamesList = ({}: GamesListProps) => {
   }, [entry, fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return status === "loading" ? (
-    <p>Loading...</p>
+    <p className="animate-spin">
+      <Loader2 />
+    </p>
   ) : status === "error" ? (
     <p>Error: {error?.message}</p>
   ) : (
