@@ -27,9 +27,16 @@ export async function GET(req: NextRequest) {
     const cookie = `${cookieName}=${process.env.PLAYSTATION_EU_COOKIE!}`;
 
     const response = await fetch(url, { headers: { Cookie: cookie } });
-    const text = await response.json();
+    const responseJson = await response.json();
 
-    let psGames: GameInfoInsert[] = text.data.purchasedTitlesRetrieve.games.map(
+    const data = responseJson.data.purchasedTitlesRetrieve;
+    const errors = responseJson.errors;
+
+    if (errors) {
+      return new Response(errors[0].message, { status: 403 });
+    }
+
+    let psGames: GameInfoInsert[] = data.games.map(
       (game: PlaystationScrape) => ({
         gameName: game.name,
         store: `Playstation EU`,
@@ -38,6 +45,7 @@ export async function GET(req: NextRequest) {
       })
     );
 
+    // Filter out duplicate entries from PS Plus stuff
     psGames = psGames.filter((game) => {
       return game.platform === "UNKNOWN" ? false : true;
     });

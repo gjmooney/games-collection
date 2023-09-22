@@ -47,6 +47,14 @@ const StoreCard = ({
             variant: "destructive",
           });
         }
+
+        if (error.response?.status === 403) {
+          return toast({
+            title: `${storeName} says: "${error.response.data}"`,
+            description: "Your cookie probably expired.",
+            variant: "destructive",
+          });
+        }
       }
 
       return toast({
