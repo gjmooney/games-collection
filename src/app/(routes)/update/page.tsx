@@ -31,6 +31,11 @@ const page = async ({}: pageProps) => {
       imageUrl: "",
       apiUrlEndpoint: "playstation-eu",
     },
+    {
+      storeName: "itch.io",
+      imageUrl: "",
+      apiUrlEndpoint: "itch",
+    },
   ];
 
   return (

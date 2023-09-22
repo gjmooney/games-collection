@@ -10,3 +10,12 @@ export const steamApiValidator = z.object({
     })
   ),
 });
+
+export const itchIoApiValidator = z.object({
+  games: z.array(
+    z.object({
+      title: z.string(),
+      cover: z.string(),
+    })
+  ),
+});
