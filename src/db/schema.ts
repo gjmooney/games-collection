@@ -17,7 +17,28 @@ export const users = pgTable("users", {
 });
 
 export const userRelations = relations(users, ({ many }) => ({
+  cookies: many(cookies),
   usersToGames: many(usersToGames),
+}));
+
+export const cookies = pgTable(
+  "cookies",
+  {
+    id: serial("id").primaryKey(),
+    name: text("name").notNull(),
+    value: text("value").notNull(),
+    userId: integer("user_id"),
+  },
+  (t) => ({
+    cookieName: unique("cookie_name").on(t.name),
+  })
+);
+
+export const cookieRelations = relations(cookies, ({ one }) => ({
+  users: one(users, {
+    fields: [cookies.userId],
+    references: [users.id],
+  }),
 }));
 
 export const games = pgTable(
@@ -30,7 +51,6 @@ export const games = pgTable(
     imgUrl: text("img_url"),
     createdAt: timestamp("created_at").defaultNow(),
   },
-
   (t) => ({
     gameOnPlatform: unique("game_on_platform").on(t.gameName, t.platform),
   })
