@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import {
+  index,
   integer,
   pgTable,
   primaryKey,
@@ -14,6 +15,7 @@ export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   clerkId: text("clerk_id").notNull(),
   username: text("username"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const userRelations = relations(users, ({ many }) => ({
@@ -28,9 +30,11 @@ export const cookies = pgTable(
     name: text("name").notNull(),
     value: text("value").notNull(),
     userId: integer("user_id"),
+    createdAt: timestamp("created_at").defaultNow(),
+    updatedAt: timestamp("updated_at").defaultNow(),
   },
   (t) => ({
-    cookieName: unique("cookie_name").on(t.name),
+    cookieName: unique("cookie_name_user_id").on(t.name, t.userId),
   })
 );
 
@@ -89,6 +93,8 @@ export const usersToGamesRelations = relations(usersToGames, ({ one }) => ({
 export type GameInfoInsert = typeof games.$inferInsert;
 export type GameInfoSelect = typeof games.$inferSelect;
 export const InsertGameSchema = createInsertSchema(games);
+
+export const InsertCookieSchema = createInsertSchema(cookies);
 
 export type UserInfo = typeof users.$inferInsert;
 export const InsertUserSchema = createInsertSchema(users);

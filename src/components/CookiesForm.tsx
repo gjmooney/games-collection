@@ -1,7 +1,9 @@
 "use client";
 
+import { cookieFormValidator } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "./ui/button";
@@ -14,20 +16,12 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { storeFronts } from "@/lib/constants";
 
 interface CookiesFormProps {}
 
 const CookiesForm = ({}: CookiesFormProps) => {
-  const formSchema = z.object({
-    humble: z.string(),
-    nintendo: z.string(),
-    playstationUs: z.string(),
-    playstationEu: z.string(),
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof cookieFormValidator>>({
+    resolver: zodResolver(cookieFormValidator),
     defaultValues: {
       humble: "",
       nintendo: "",
@@ -36,9 +30,11 @@ const CookiesForm = ({}: CookiesFormProps) => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof cookieFormValidator>) => {
     console.log("values", values);
-    form.reset();
+    const res = await axios.post("/api/cookies", values);
+    console.log("res.data", res.data);
+    // form.reset();
   };
 
   return (

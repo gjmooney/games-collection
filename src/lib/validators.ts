@@ -19,3 +19,10 @@ export const itchIoApiValidator = z.object({
     })
   ),
 });
+
+export const cookieFormValidator = z.object({
+  humble: z.string(),
+  nintendo: z.string(),
+  playstationUs: z.string(),
+  playstationEu: z.string(),
+});
