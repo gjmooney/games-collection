@@ -2,7 +2,7 @@ import { convertTimeToDouble } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer, { TimeoutError } from "puppeteer";
-import { z } from "zod";
+import { ZodError } from "zod";
 
 // TODO toast
 export async function GET(req: NextRequest) {
@@ -77,10 +77,10 @@ export async function GET(req: NextRequest) {
 
     await browser.close();
 
-    return NextResponse.json(nintendoGames);
+    return NextResponse.json(nintendoGames, { status: 200 });
   } catch (error: any) {
     // Type parsing error
-    if (error instanceof z.ZodError) {
+    if (error instanceof ZodError) {
       return new Response("[PARSE_ERROR]" + error.message, { status: 422 });
     }
 

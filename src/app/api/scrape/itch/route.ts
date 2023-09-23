@@ -3,7 +3,7 @@ import { itchIoApiValidator } from "@/lib/validators";
 import { auth } from "@clerk/nextjs";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { ZodError } from "zod";
 
 export async function GET(req: NextRequest) {
   try {
@@ -28,10 +28,10 @@ export async function GET(req: NextRequest) {
         }) satisfies GameInfoInsert
     );
 
-    return NextResponse.json(itchGames);
+    return NextResponse.json(itchGames, { status: 200 });
   } catch (error: any) {
     // Type parsing error
-    if (error instanceof z.ZodError) {
+    if (error instanceof ZodError) {
       console.log("error", error);
       return new Response("[PARSE_ERROR]" + error.message, { status: 422 });
     }

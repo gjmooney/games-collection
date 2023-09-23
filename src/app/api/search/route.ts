@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
       .where(eq(usersToGames.userId, user[0].id))
       .where(ilike(games.gameName, `%${q}%`));
 
-    return NextResponse.json(results);
+    return NextResponse.json(results, { status: 200 });
   } catch (error) {
     console.log("error", error);
   }

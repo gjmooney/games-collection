@@ -1,7 +1,7 @@
 import { GameInfoInsert } from "@/db/schema";
 import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { ZodError } from "zod";
 
 type PlaystationScrape = {
   name: string;
@@ -50,10 +50,10 @@ export async function GET(req: NextRequest) {
       return game.platform === "UNKNOWN" ? false : true;
     });
 
-    return NextResponse.json(psGames);
+    return NextResponse.json(psGames, { status: 200 });
   } catch (error: any) {
     // Type parsing error
-    if (error instanceof z.ZodError) {
+    if (error instanceof ZodError) {
       return new Response("[PARSE_ERROR]" + error.message, { status: 422 });
     }
     console.log("ERROR", error.message);

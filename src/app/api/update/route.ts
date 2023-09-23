@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    return NextResponse.json(arr.length);
+    return NextResponse.json(arr.length, { status: 200 });
   } catch (error) {
     console.log("error", error);
     return new Response("Could not update database", { status: 500 });

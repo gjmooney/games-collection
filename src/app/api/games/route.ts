@@ -68,7 +68,7 @@ export async function GET(req: NextRequest) {
       nextCursor = gamesFromDb[LIMIT - 1].id;
     }
 
-    return NextResponse.json({ gamesFromDb, nextCursor });
+    return NextResponse.json({ gamesFromDb, nextCursor }, { status: 200 });
   } catch (error) {
     console.log("error", error);
   }
