@@ -3,7 +3,9 @@
 import { cookieFormValidator } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "./ui/button";
@@ -16,6 +18,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
+import { toast } from "./ui/use-toast";
 
 interface CookiesFormProps {}
 
@@ -30,12 +33,26 @@ const CookiesForm = ({}: CookiesFormProps) => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof cookieFormValidator>) => {
-    console.log("values", values);
-    const res = await axios.post("/api/cookies", values);
-    console.log("res.data", res.data);
-    // form.reset();
-  };
+  const { mutate: onSubmit, isLoading } = useMutation({
+    mutationFn: async (values: z.infer<typeof cookieFormValidator>) => {
+      const data = await axios.post("/api/cookies", values);
+      console.log("data", data);
+      return data;
+    },
+    onError: (error) => {
+      return toast({
+        title: "There was an error.",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    },
+    onSuccess: () => {
+      form.reset();
+      toast({
+        description: "Your cookies have been updated",
+      });
+    },
+  });
 
   return (
     <div className="flex flex-col w-full items-center justify-center">
@@ -44,7 +61,9 @@ const CookiesForm = ({}: CookiesFormProps) => {
       </Label>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit((e) => {
+            onSubmit(e);
+          })}
           className="space-y-8 w-[70%] flex flex-col"
         >
           <FormField
@@ -115,8 +134,12 @@ const CookiesForm = ({}: CookiesFormProps) => {
               </FormItem>
             )}
           ></FormField>
-          <Button className="w-[80%] self-center" type="submit">
-            Submit
+          <Button
+            disabled={isLoading}
+            className="w-[80%] self-center"
+            type="submit"
+          >
+            {isLoading ? <Loader2 className="animate-spin" /> : "Submit"}
           </Button>
         </form>
       </Form>
