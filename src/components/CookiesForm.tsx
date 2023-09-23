@@ -37,7 +37,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
     mutationFn: async (values: z.infer<typeof cookieFormValidator>) => {
       const data = await axios.post("/api/cookies", values);
       console.log("data", data);
-      return data;
+      return data.data;
     },
     onError: (error) => {
       return toast({
@@ -46,10 +46,10 @@ const CookiesForm = ({}: CookiesFormProps) => {
         variant: "destructive",
       });
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       form.reset();
       toast({
-        description: "Your cookies have been updated",
+        description: `${data} cookies have been updated`,
       });
     },
   });

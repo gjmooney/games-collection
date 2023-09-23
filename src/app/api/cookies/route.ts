@@ -22,6 +22,8 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
     cookieFormValidator.parse(data);
 
+    let numberOfCookiesUpdated = 0;
+
     for (const key in data) {
       // Check that data object (and not its prototype) has correct keys
       // DOn't update if value is empty string
@@ -36,11 +38,13 @@ export async function POST(req: NextRequest) {
           .onConflictDoUpdate({
             target: [cookies.name, cookies.userId],
             set: { value: data[key] },
-          });
+          })
+          .returning();
+        numberOfCookiesUpdated++;
       }
     }
 
-    return NextResponse.json("Cookies updated", { status: 200 });
+    return NextResponse.json(numberOfCookiesUpdated, { status: 200 });
   } catch (error) {
     if (error instanceof ZodError) {
       return new Response("Invalid request data passed", { status: 422 });
