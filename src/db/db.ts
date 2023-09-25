@@ -1,5 +1,6 @@
 import * as schema from "@/db/schema";
 import { decryptCookies } from "@/lib/utils";
+import { CookieNames } from "@/lib/validators";
 import { neon, neonConfig } from "@neondatabase/serverless";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/neon-http";
@@ -9,8 +10,10 @@ neonConfig.fetchConnectionCache = true;
 const sql = neon(process.env.DATABASE_URL!);
 const db = drizzle(sql, { schema });
 
-//TODO: type safety for cookie name
-export async function getDecryptedCookie(clerkId: string, cookieName: string) {
+export async function getDecryptedCookie(
+  clerkId: string,
+  cookieName: keyof CookieNames
+) {
   const user = await db
     .select({ id: schema.users.id })
     .from(schema.users)
