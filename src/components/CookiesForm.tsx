@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { AES } from "crypto-js";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,6 +23,14 @@ import { toast } from "./ui/use-toast";
 
 interface CookiesFormProps {}
 
+const encryptCookies = (cookie: string) => {
+  const cookieCipher = AES.encrypt(
+    cookie,
+    process.env.NEXT_PUBLIC_ENCRYPTION_KEY!
+  );
+  return encodeURIComponent(cookieCipher.toString());
+};
+
 const CookiesForm = ({}: CookiesFormProps) => {
   const form = useForm<z.infer<typeof cookieFormValidator>>({
     resolver: zodResolver(cookieFormValidator),
@@ -35,8 +44,19 @@ const CookiesForm = ({}: CookiesFormProps) => {
 
   const { mutate: onSubmit, isLoading } = useMutation({
     mutationFn: async (values: z.infer<typeof cookieFormValidator>) => {
-      const data = await axios.post("/api/cookies", values);
-      console.log("data", data);
+      const encryptedCookies: Record<string, string> = {};
+
+      for (const [key, value] of Object.entries(values)) {
+        // Don't bother encrypting empty values
+        if (value !== "") {
+          encryptedCookies[key] = encryptCookies(value);
+        } else {
+          encryptedCookies[key] = "";
+        }
+      }
+
+      const data = await axios.post("/api/cookies", encryptedCookies);
+
       return data.data;
     },
     onError: (error) => {
@@ -47,7 +67,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
       });
     },
     onSuccess: (data) => {
-      form.reset();
+      //form.reset();
       toast({
         description: `${data} cookies have been updated`,
       });
