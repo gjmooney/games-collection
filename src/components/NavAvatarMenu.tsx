@@ -31,21 +31,27 @@ const NavAvatarMenu = async ({}: NavAvatarMenuProps) => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <Link href="/profile">Profile</Link>
+          <DropdownMenuItem asChild>
+            <Link href="/profile">
+              <User className="mr-2 h-4 w-4" />
+              Profile
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Cookie className="mr-2 h-4 w-4" />
-            <Link href="/manage-cookies">Manage Cookies</Link>
+          <DropdownMenuItem asChild>
+            <Link href="/manage-cookies">
+              <Cookie className="mr-2 h-4 w-4" />
+              Manage Cookies
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <LogOut className="mr-2 h-4 w-4" />
+          <DropdownMenuItem asChild>
             <SignOutButton>
-              <Link href="/">Sign Out</Link>
+              <Link href="/">
+                <LogOut className="mr-2 h-4 w-4" />
+                Sign Out
+              </Link>
             </SignOutButton>
           </DropdownMenuItem>
         </DropdownMenuGroup>
