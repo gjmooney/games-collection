@@ -9,7 +9,8 @@ neonConfig.fetchConnectionCache = true;
 const sql = neon(process.env.DATABASE_URL!);
 const db = drizzle(sql, { schema });
 
-export async function getDecryptedCookie(clerkId: string) {
+//TODO: type safety for cookie name
+export async function getDecryptedCookie(clerkId: string, cookieName: string) {
   const user = await db
     .select({ id: schema.users.id })
     .from(schema.users)
@@ -19,7 +20,7 @@ export async function getDecryptedCookie(clerkId: string) {
     .select({ value: schema.cookies.value })
     .from(schema.users)
     .innerJoin(schema.cookies, eq(schema.users.id, schema.cookies.userId))
-    .where(eq(schema.cookies.name, "humble"));
+    .where(eq(schema.cookies.name, cookieName));
 
   const decodedCookie = decryptCookies(encryptedCookie[0].value);
 

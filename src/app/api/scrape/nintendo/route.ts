@@ -1,3 +1,4 @@
+import { getDecryptedCookie } from "@/db/db";
 import { convertTimeToDouble } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
@@ -13,8 +14,9 @@ export async function GET(req: NextRequest) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    const url = "https://ec.nintendo.com/my/transactions/1";
+    const decodedCookie = await getDecryptedCookie(userId, "nintendo");
 
+    const url = "https://ec.nintendo.com/my/transactions/1";
     const expiration = convertTimeToDouble("2024-10-08T13:05:59.716Z");
 
     const cookie = [
@@ -25,7 +27,7 @@ export async function GET(req: NextRequest) {
         httpOnly: true,
         path: "/",
         secure: true,
-        value: process.env.NINTENDO_COOKIE!,
+        value: decodedCookie,
       },
     ];
 
