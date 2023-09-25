@@ -4,6 +4,7 @@ import { storeFronts } from "@/lib/constants";
 interface pageProps {}
 
 const page = async ({}: pageProps) => {
+  //TODO: refactor mutation out here? can share isLoading to disable all buttons
   return (
     <main className="flex gap-9 items-center flex-wrap justify-around">
       {storeFronts.map((store) => (

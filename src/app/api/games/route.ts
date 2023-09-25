@@ -5,6 +5,7 @@ import { and, asc, eq, gt } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 //TODO: wrap the stuff using search params in a suspense boundary
+//TODO: use prepared statements
 const LIMIT = 10;
 export const dynamic = "force-dynamic";
 

@@ -73,6 +73,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
     },
   });
 
+  //TODO: add one for steam
   return (
     <div className="flex flex-col w-full items-center justify-center">
       <Label className="mb-16 text-7xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent capitalize">

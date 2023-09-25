@@ -30,6 +30,7 @@ const GamesListPage = ({}: GamesListPageProps) => {
 
   const request = useDebounceCallback(refetch, 500);
 
+  //TODO add a header? and a game count
   return (
     <main className="px-16">
       <Input
