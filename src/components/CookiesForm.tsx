@@ -1,6 +1,6 @@
 "use client";
 
-import { cookieFormValidator } from "@/lib/validators";
+import { CookieNamesType, cookieFormValidator } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useMutation } from "@tanstack/react-query";
@@ -8,7 +8,6 @@ import axios from "axios";
 import { AES } from "crypto-js";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "./ui/button";
 import {
   Form,
@@ -32,7 +31,7 @@ const encryptCookies = (cookie: string) => {
 };
 
 const CookiesForm = ({}: CookiesFormProps) => {
-  const form = useForm<z.infer<typeof cookieFormValidator>>({
+  const form = useForm<CookieNamesType>({
     resolver: zodResolver(cookieFormValidator),
     defaultValues: {
       humble: "",
@@ -43,7 +42,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
   });
 
   const { mutate: onSubmit, isLoading } = useMutation({
-    mutationFn: async (values: z.infer<typeof cookieFormValidator>) => {
+    mutationFn: async (values: CookieNamesType) => {
       const encryptedCookies: Record<string, string> = {};
 
       for (const [key, value] of Object.entries(values)) {

@@ -27,4 +27,4 @@ export const cookieFormValidator = z.object({
   playstationEu: z.string(),
 });
 
-export type CookieNames = z.infer<typeof cookieFormValidator>;
+export type CookieNamesType = z.infer<typeof cookieFormValidator>;
