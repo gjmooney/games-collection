@@ -2,7 +2,6 @@
 
 import { CookieNamesType, cookieFormValidator } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Label } from "@radix-ui/react-dropdown-menu";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { AES } from "crypto-js";
@@ -76,9 +75,6 @@ const CookiesForm = ({}: CookiesFormProps) => {
   //TODO: add one for steam
   return (
     <div className="flex flex-col w-full items-center justify-center">
-      <Label className="mb-16 text-7xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent capitalize">
-        Update your cookies
-      </Label>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit((e) => {

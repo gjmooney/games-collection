@@ -1,5 +1,6 @@
 "use client";
 
+import HeaderText from "@/components/animations/HeaderText";
 import GameCard from "@/components/games/GameCard";
 import GamesList from "@/components/games/GamesList";
 import { Input } from "@/components/ui/input";
@@ -33,6 +34,7 @@ const GamesListPage = ({}: GamesListPageProps) => {
   //TODO add a header? and a game count
   return (
     <main className="px-16">
+      <HeaderText title="Collection" />
       <Input
         placeholder="Search for a game..."
         onChange={(event) => {
