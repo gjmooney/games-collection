@@ -76,7 +76,7 @@ const StoreCard = ({
     },
 
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["games-list"] });
+      queryClient.invalidateQueries({ queryKey: ["games-list", "game-count"] });
       toast({
         title: "Success",
         description: `Inserted ${data} games`,

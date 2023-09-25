@@ -2,7 +2,7 @@ import * as schema from "@/db/schema";
 import { decryptCookies } from "@/lib/utils";
 import { CookieNamesType } from "@/lib/validators";
 import { neon, neonConfig } from "@neondatabase/serverless";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/neon-http";
 
 neonConfig.fetchConnectionCache = true;
@@ -23,7 +23,9 @@ export async function getDecryptedCookie(
     .select({ value: schema.cookies.value })
     .from(schema.users)
     .innerJoin(schema.cookies, eq(schema.users.id, schema.cookies.userId))
-    .where(eq(schema.cookies.name, cookieName));
+    .where(
+      and(eq(schema.cookies.name, cookieName), eq(schema.users.id, user[0].id))
+    );
 
   const decodedCookie = decryptCookies(encryptedCookie[0].value);
 
