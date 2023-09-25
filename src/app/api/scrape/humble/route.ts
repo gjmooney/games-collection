@@ -1,10 +1,10 @@
+import { getDecryptedCookie } from "@/db/db";
 import { convertTimeToDouble } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer, { TimeoutError } from "puppeteer";
 import { ZodError } from "zod";
 
-// TODO toast
 // TODO read the docs about puppeteer core if this doesn't work on vercel
 export async function GET(req: NextRequest) {
   try {
@@ -14,9 +14,25 @@ export async function GET(req: NextRequest) {
       return new Response("Unauthorized", { status: 401 });
     }
 
+    /* const user = await db
+      .select({ id: users.id })
+      .from(users)
+      .where(eq(users.clerkId, userId));
+
+    const encryptedCookie = await db
+      .select({ value: cookies.value })
+      .from(users)
+      .innerJoin(cookies, eq(users.id, cookies.userId))
+      .where(eq(cookies.name, "humble"));
+
+    const decodedCookie = decryptCookies(encryptedCookie[0].value); */
+
+    const decodedCookie = await getDecryptedCookie(userId);
     const url = "https://www.humblebundle.com/home/library";
 
     const expiration = convertTimeToDouble("2023-12-02T12:53:25.000Z");
+
+    console.log("decodedCookie", decodedCookie);
 
     const cookieVal = [
       {
@@ -27,7 +43,7 @@ export async function GET(req: NextRequest) {
         path: "/",
         samesite: "None",
         secure: true,
-        value: process.env.HUMBLE_COOKIE!,
+        value: decodedCookie,
       },
     ];
 
