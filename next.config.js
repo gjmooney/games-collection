@@ -6,6 +6,7 @@ const nextConfig = {
       "hb.imgix.net",
       "image.api.playstation.com",
       "agst.prod.dl.playstation.net",
+      "img.itch.zone",
     ],
   },
 };
