@@ -60,7 +60,7 @@ const GamesListPage = ({}: GamesListPageProps) => {
         </span>
       ) : (
         <span>
-          <div className="w-[186px] h-[20px] mb-16" />
+          <div className="w-[186px] h-[20px] mb-14" />
         </span>
       )}
 

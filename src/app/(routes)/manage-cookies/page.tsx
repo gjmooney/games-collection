@@ -5,8 +5,8 @@ interface pageProps {}
 
 const page = ({}: pageProps) => {
   return (
-    <main className="flex flex-col justify-center items-center">
-      <HeaderText title="Manage your cookies" className="text-7xl" />
+    <main className="flex flex-col ">
+      <HeaderText title="Manage your cookies" className="text-7xl mb-10" />
       <CookiesForm />
     </main>
   );

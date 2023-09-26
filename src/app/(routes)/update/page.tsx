@@ -9,7 +9,7 @@ const page = async ({}: pageProps) => {
   return (
     <main className="flex flex-col ">
       <HeaderText title="Update" />
-      <div className="">
+      <div className="flex flex-row gap-9 items-center flex-wrap justify-around">
         {storeFronts.map((store) => (
           <StoreCard
             key={store.id}
