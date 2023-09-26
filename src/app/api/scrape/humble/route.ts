@@ -14,7 +14,12 @@ export async function GET(req: NextRequest) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    const decodedCookie = await getDecryptedCookie(userId, "humble");
+    let decodedCookie = "";
+    try {
+      decodedCookie = await getDecryptedCookie(userId, "humble");
+    } catch (error) {
+      return new Response("Cookie not found", { status: 404 });
+    }
 
     const url = "https://www.humblebundle.com/home/library";
     const expiration = convertTimeToDouble("2023-12-02T12:53:25.000Z");

@@ -20,7 +20,12 @@ export async function GET(req: NextRequest) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    const decodedCookie = await getDecryptedCookie(userId, "playstationEu");
+    let decodedCookie = "";
+    try {
+      decodedCookie = await getDecryptedCookie(userId, "playstationEu");
+    } catch (error) {
+      return new Response("Cookie not found", { status: 404 });
+    }
 
     const url =
       "https://web.np.playstation.com/api/graphql/v1/op?operationName=getPurchasedGameList&variables=%7B%22platform%22%3A%5B%22ps4%22%2C%22ps5%22%5D%2C%22size%22%3A1000%2C%22sortBy%22%3A%22ACTIVE_DATE%22%2C%22sortDirection%22%3A%22desc%22%2C%22membership%22%3A%22PS_PLUS%22%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22sha256Hash%22%3A%22827a423f6a8ddca4107ac01395af2ec0eafd8396fc7fa204aaf9b7ed2eefa168%22%7D%7D";

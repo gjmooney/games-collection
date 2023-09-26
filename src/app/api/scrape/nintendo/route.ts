@@ -13,7 +13,12 @@ export async function GET(req: NextRequest) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    const decodedCookie = await getDecryptedCookie(userId, "nintendo");
+    let decodedCookie = "";
+    try {
+      decodedCookie = await getDecryptedCookie(userId, "nintendo");
+    } catch (error) {
+      return new Response("Cookie not found", { status: 404 });
+    }
 
     const url = "https://ec.nintendo.com/my/transactions/1";
     const expiration = convertTimeToDouble("2024-10-08T13:05:59.716Z");

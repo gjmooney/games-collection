@@ -16,8 +16,15 @@ export async function GET(req: NextRequest) {
       return new Response("Unauthorized", { status: 401 });
     }
 
-    const decodedSsoCookie = await getDecryptedCookie(userId, "epic_sso");
-    const decodedBearerCookie = await getDecryptedCookie(userId, "epic_bearer");
+    let decodedSsoCookie = "";
+    let decodedBearerCookie = "";
+
+    try {
+      decodedSsoCookie = await getDecryptedCookie(userId, "epic_sso");
+      decodedBearerCookie = await getDecryptedCookie(userId, "epic_bearer");
+    } catch (error) {
+      return new Response("Cookie not found", { status: 404 });
+    }
 
     const cookie = `EPIC_SSO=${decodedSsoCookie}; EPIC_BEARER_TOKEN=${decodedBearerCookie}`;
     const firstUrl =
