@@ -1,11 +1,10 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 import { GameInfoInsert } from "@/db/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import { Info } from "lucide-react";
+import { Info, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import {
@@ -50,7 +49,6 @@ const StoreCard = ({
       console.log(" store card error", error);
 
       if (error instanceof AxiosError) {
-        console.log("axios");
         if (error.response?.status === 401) {
           return toast({
             title: "There was a problem",
@@ -111,8 +109,12 @@ const StoreCard = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <Button disabled={isLoading} onClick={() => fetchGames()}>
-          Update
+        <Button
+          disabled={isLoading}
+          className="w-[80px]"
+          onClick={() => fetchGames()}
+        >
+          {isLoading ? <Loader2 className="animate-spin" /> : "Update"}
         </Button>
       </CardContent>
     </Card>
