@@ -18,7 +18,7 @@ const Footer = () => {
           Greg
         </Link>
       </div>
-      <Link className="" href="/">
+      <Link className="" href="/contact">
         {/* TODO: link to contact form? */}
         Say Hello
       </Link>
