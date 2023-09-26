@@ -41,6 +41,9 @@ dependencies:
   '@tanstack/react-query':
     specifier: ^4.35.3
     version: 4.35.3(react-dom@18.2.0)(react@18.2.0)
+  '@types/cheerio':
+    specifier: ^0.22.32
+    version: 0.22.32
   '@types/crypto-js':
     specifier: ^4.1.2
     version: 4.1.2
@@ -1410,6 +1413,12 @@ packages:
     resolution: {integrity: sha512-oyl4jvAfTGX9Bt6Or4H9ni1Z447/tQuxnZsytsCaExKlmJiU8sFgnIBRzJUpKwB5eWn9HuBYlUlVA74q/yN0eQ==}
     dependencies:
       '@types/connect': 3.4.36
+      '@types/node': 20.6.2
+    dev: false
+
+  /@types/cheerio@0.22.32:
+    resolution: {integrity: sha512-4RrpCp5ufWTLb6/1RCOjazRhUM6DTD79l763det29n8kLmPB7XeN46cxlUf2GsSF+0g6CbWT5nYl8C/Gs15bdg==}
+    dependencies:
       '@types/node': 20.6.2
     dev: false
 

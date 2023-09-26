@@ -46,8 +46,6 @@ const StoreCard = ({
     },
 
     onError: (error) => {
-      console.log(" store card error", error);
-
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
           return toast({

@@ -40,6 +40,8 @@ const CookiesForm = ({}: CookiesFormProps) => {
       playstationEu: "",
       epic_sso: "",
       epic_bearer: "",
+      gog_us: "",
+      gog_al: "",
     },
   });
 
@@ -187,6 +189,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
               </FormItem>
             )}
           ></FormField>
+
           <div className="bg-muted px-4 rounded-lg space-y-2 py-3">
             <FormField
               control={form.control}
@@ -223,6 +226,56 @@ const CookiesForm = ({}: CookiesFormProps) => {
                       <FormDescription className="w-32">
                         EPIC_BEARER
                       </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Input
+                        className="self-center"
+                        placeholder="Enter Cookie Value..."
+                        {...field}
+                      />
+                    </FormControl>
+                  </div>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            ></FormField>
+          </div>
+
+          <div className="bg-muted px-4 rounded-lg space-y-2 py-3">
+            <FormField
+              control={form.control}
+              name="gog_us"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex flex-row gap-16">
+                    <div className="flex-col">
+                      <FormLabel className="self-start">GOG</FormLabel>
+                      <FormDescription className="self-end w-32">
+                        gog_us
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Input
+                        className="self-center"
+                        placeholder="Enter Cookie Value..."
+                        {...field}
+                      />
+                    </FormControl>
+                  </div>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            ></FormField>
+            <FormField
+              control={form.control}
+              name="gog_al"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex flex-row gap-16 items-center">
+                    <div className="flex-col">
+                      <FormDescription className="w-32">gog-al</FormDescription>
                     </div>
                     <FormControl>
                       <Input

@@ -43,4 +43,10 @@ export const storeFronts = [
     imageUrl: "",
     apiUrlEndpoint: "epic",
   },
+  {
+    id: 8,
+    storeName: "GOG",
+    imageUrl: "",
+    apiUrlEndpoint: "gog",
+  },
 ];
