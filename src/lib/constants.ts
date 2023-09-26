@@ -37,4 +37,10 @@ export const storeFronts = [
     imageUrl: "",
     apiUrlEndpoint: "itch",
   },
+  {
+    id: 7,
+    storeName: "Epic",
+    imageUrl: "",
+    apiUrlEndpoint: "epic",
+  },
 ];

@@ -11,6 +11,7 @@ import { Button } from "./ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -37,6 +38,8 @@ const CookiesForm = ({}: CookiesFormProps) => {
       nintendo: "",
       playstationUs: "",
       playstationEu: "",
+      epic_sso: "",
+      epic_bearer: "",
     },
   });
 
@@ -72,7 +75,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
     },
   });
 
-  //TODO: add one for steam
+  //TODO: add one for steam?
   return (
     <div className="flex flex-col w-full items-center justify-center">
       <Form {...form}>
@@ -88,7 +91,12 @@ const CookiesForm = ({}: CookiesFormProps) => {
             render={({ field }) => (
               <FormItem>
                 <div className="flex flex-row gap-16">
-                  <FormLabel className="self-center w-32">Humble</FormLabel>
+                  <div className="flex-col">
+                    <FormLabel className="self-start ">Humble</FormLabel>
+                    <FormDescription className="self-end w-32">
+                      _simpleauth_sess
+                    </FormDescription>
+                  </div>
                   <FormControl>
                     <Input placeholder="Enter Cookie Value..." {...field} />
                   </FormControl>
@@ -104,7 +112,12 @@ const CookiesForm = ({}: CookiesFormProps) => {
             render={({ field }) => (
               <FormItem>
                 <div className="flex flex-row gap-16">
-                  <FormLabel className="self-center w-32">Nintendo</FormLabel>
+                  <div className="flex-col">
+                    <FormLabel className="self-start ">Nintendo</FormLabel>
+                    <FormDescription className="self-end w-32">
+                      NASID
+                    </FormDescription>
+                  </div>
                   <FormControl>
                     <Input placeholder="Enter Cookie Value..." {...field} />
                   </FormControl>
@@ -120,9 +133,14 @@ const CookiesForm = ({}: CookiesFormProps) => {
             render={({ field }) => (
               <FormItem>
                 <div className="flex flex-row gap-16">
-                  <FormLabel className="self-center w-32">
-                    Playstation US
-                  </FormLabel>
+                  <div className="flex-col">
+                    <FormLabel className="self-start ">
+                      Playstation US
+                    </FormLabel>
+                    <FormDescription className="self-end w-32">
+                      pdccws_p
+                    </FormDescription>
+                  </div>
                   <FormControl>
                     <Input placeholder="Enter Cookie Value..." {...field} />
                   </FormControl>
@@ -138,9 +156,54 @@ const CookiesForm = ({}: CookiesFormProps) => {
             render={({ field }) => (
               <FormItem>
                 <div className="flex flex-row gap-16">
-                  <FormLabel className="self-center w-32">
-                    Playstation EU
-                  </FormLabel>
+                  <div className="flex-col">
+                    <FormLabel className="self-start">Playstation EU</FormLabel>
+                    <FormDescription className="self-end w-32">
+                      pdccws_p
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="Enter Cookie Value..." {...field} />
+                  </FormControl>
+                </div>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          ></FormField>
+          <FormField
+            control={form.control}
+            name="epic_sso"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex flex-row gap-16">
+                  <div className="flex-col">
+                    <FormLabel className="self-start">Epic</FormLabel>
+                    <FormDescription className="self-end w-32">
+                      EPIC_SSO
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="Enter Cookie Value..." {...field} />
+                  </FormControl>
+                </div>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          ></FormField>
+          <FormField
+            control={form.control}
+            name="epic_bearer"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex flex-row gap-16">
+                  <div className="flex-col">
+                    <FormLabel className="self-start">Epic</FormLabel>
+                    <FormDescription className="self-end w-32">
+                      EPIC_BEARER
+                    </FormDescription>
+                  </div>
                   <FormControl>
                     <Input placeholder="Enter Cookie Value..." {...field} />
                   </FormControl>

@@ -59,6 +59,7 @@ const StoreCard = ({
           });
         }
 
+        //TODO: add link to manage cookie page
         if (error.response?.status === 403) {
           return toast({
             title: `${storeName} says: "${error.response.data}"`,

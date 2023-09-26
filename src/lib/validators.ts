@@ -25,6 +25,9 @@ export const cookieFormValidator = z.object({
   nintendo: z.string(),
   playstationUs: z.string(),
   playstationEu: z.string(),
+  epic_sso: z.string(),
+  epic_bearer: z.string(),
+
 });
 
 export type CookieNamesType = z.infer<typeof cookieFormValidator>;

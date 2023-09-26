@@ -38,8 +38,8 @@ export async function POST(req: NextRequest) {
           .onConflictDoUpdate({
             target: [cookies.name, cookies.userId],
             set: { value: data[key] },
-          })
-          .returning();
+          });
+
         numberOfCookiesUpdated++;
       }
     }

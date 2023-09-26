@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 import puppeteer, { TimeoutError } from "puppeteer";
 import { ZodError } from "zod";
 
-// TODO toast
 export async function GET(req: NextRequest) {
   try {
     const { userId } = auth();
