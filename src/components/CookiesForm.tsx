@@ -89,7 +89,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
             control={form.control}
             name="humble"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="bg-muted px-4 rounded-lg py-3">
                 <div className="flex flex-row gap-16">
                   <div className="flex-col">
                     <FormLabel className="self-start ">Humble</FormLabel>
@@ -98,7 +98,11 @@ const CookiesForm = ({}: CookiesFormProps) => {
                     </FormDescription>
                   </div>
                   <FormControl>
-                    <Input placeholder="Enter Cookie Value..." {...field} />
+                    <Input
+                      className="self-center"
+                      placeholder="Enter Cookie Value..."
+                      {...field}
+                    />
                   </FormControl>
                 </div>
 
@@ -110,7 +114,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
             control={form.control}
             name="nintendo"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="bg-muted px-4 rounded-lg py-3">
                 <div className="flex flex-row gap-16">
                   <div className="flex-col">
                     <FormLabel className="self-start ">Nintendo</FormLabel>
@@ -119,7 +123,11 @@ const CookiesForm = ({}: CookiesFormProps) => {
                     </FormDescription>
                   </div>
                   <FormControl>
-                    <Input placeholder="Enter Cookie Value..." {...field} />
+                    <Input
+                      className="self-center"
+                      placeholder="Enter Cookie Value..."
+                      {...field}
+                    />
                   </FormControl>
                 </div>
 
@@ -131,7 +139,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
             control={form.control}
             name="playstationUs"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="bg-muted px-4 rounded-lg py-3 ">
                 <div className="flex flex-row gap-16">
                   <div className="flex-col">
                     <FormLabel className="self-start ">
@@ -142,7 +150,11 @@ const CookiesForm = ({}: CookiesFormProps) => {
                     </FormDescription>
                   </div>
                   <FormControl>
-                    <Input placeholder="Enter Cookie Value..." {...field} />
+                    <Input
+                      className="self-center"
+                      placeholder="Enter Cookie Value..."
+                      {...field}
+                    />
                   </FormControl>
                 </div>
 
@@ -154,7 +166,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
             control={form.control}
             name="playstationEu"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="bg-muted px-4 rounded-lg py-3">
                 <div className="flex flex-row gap-16">
                   <div className="flex-col">
                     <FormLabel className="self-start">Playstation EU</FormLabel>
@@ -163,7 +175,11 @@ const CookiesForm = ({}: CookiesFormProps) => {
                     </FormDescription>
                   </div>
                   <FormControl>
-                    <Input placeholder="Enter Cookie Value..." {...field} />
+                    <Input
+                      className="self-center"
+                      placeholder="Enter Cookie Value..."
+                      {...field}
+                    />
                   </FormControl>
                 </div>
 
@@ -171,48 +187,57 @@ const CookiesForm = ({}: CookiesFormProps) => {
               </FormItem>
             )}
           ></FormField>
-          <FormField
-            control={form.control}
-            name="epic_sso"
-            render={({ field }) => (
-              <FormItem>
-                <div className="flex flex-row gap-16">
-                  <div className="flex-col">
-                    <FormLabel className="self-start">Epic</FormLabel>
-                    <FormDescription className="self-end w-32">
-                      EPIC_SSO
-                    </FormDescription>
+          <div className="bg-muted px-4 rounded-lg space-y-2 py-3">
+            <FormField
+              control={form.control}
+              name="epic_sso"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex flex-row gap-16">
+                    <div className="flex-col">
+                      <FormLabel className="self-start">Epic</FormLabel>
+                      <FormDescription className="self-end w-32">
+                        EPIC_SSO
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Input
+                        className="self-center"
+                        placeholder="Enter Cookie Value..."
+                        {...field}
+                      />
+                    </FormControl>
                   </div>
-                  <FormControl>
-                    <Input placeholder="Enter Cookie Value..." {...field} />
-                  </FormControl>
-                </div>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          ></FormField>
-          <FormField
-            control={form.control}
-            name="epic_bearer"
-            render={({ field }) => (
-              <FormItem>
-                <div className="flex flex-row gap-16">
-                  <div className="flex-col">
-                    <FormLabel className="self-start">Epic</FormLabel>
-                    <FormDescription className="self-end w-32">
-                      EPIC_BEARER
-                    </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            ></FormField>
+            <FormField
+              control={form.control}
+              name="epic_bearer"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex flex-row gap-16 items-center">
+                    <div className="flex-col">
+                      <FormDescription className="w-32">
+                        EPIC_BEARER
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Input
+                        className="self-center"
+                        placeholder="Enter Cookie Value..."
+                        {...field}
+                      />
+                    </FormControl>
                   </div>
-                  <FormControl>
-                    <Input placeholder="Enter Cookie Value..." {...field} />
-                  </FormControl>
-                </div>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          ></FormField>
+                  <FormMessage />
+                </FormItem>
+              )}
+            ></FormField>
+          </div>
           <Button
             disabled={isLoading}
             className="w-[80%] self-center"
