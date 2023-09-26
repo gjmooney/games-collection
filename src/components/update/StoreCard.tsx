@@ -103,6 +103,20 @@ const StoreCard = ({
                 </Tooltip>
               </TooltipProvider>
             )}
+            {storeName === "Nintendo" && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info className="w-4 h-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="normal-case">
+                      Nintendo only save two years of history.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
           </div>
         </CardTitle>
       </CardHeader>
