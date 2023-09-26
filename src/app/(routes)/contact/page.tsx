@@ -7,7 +7,7 @@ const page = ({}: pageProps) => {
   return (
     <main className="flex flex-col justify-center items-center">
       <HeaderText title="Say Hi!" />
-      <ContactForm />;
+      <ContactForm />
     </main>
   );
 };
