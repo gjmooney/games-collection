@@ -7,6 +7,7 @@ const nextConfig = {
       "image.api.playstation.com",
       "agst.prod.dl.playstation.net",
       "img.itch.zone",
+      "images-3.gog-statics.com",
     ],
   },
 };
