@@ -91,7 +91,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
             control={form.control}
             name="humble"
             render={({ field }) => (
-              <FormItem className="bg-muted px-4 rounded-lg py-3">
+              <FormItem className="bg-card shadow-sharp px-4 rounded-lg py-3">
                 <div className="flex flex-row gap-16">
                   <div className="flex-col">
                     <FormLabel className="self-start ">Humble</FormLabel>
@@ -116,7 +116,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
             control={form.control}
             name="nintendo"
             render={({ field }) => (
-              <FormItem className="bg-muted px-4 rounded-lg py-3">
+              <FormItem className="bg-card shadow-sharp px-4 rounded-lg py-3">
                 <div className="flex flex-row gap-16">
                   <div className="flex-col">
                     <FormLabel className="self-start ">Nintendo</FormLabel>
@@ -141,7 +141,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
             control={form.control}
             name="playstationUs"
             render={({ field }) => (
-              <FormItem className="bg-muted px-4 rounded-lg py-3 ">
+              <FormItem className="bg-card shadow-sharp px-4 rounded-lg py-3 ">
                 <div className="flex flex-row gap-16">
                   <div className="flex-col">
                     <FormLabel className="self-start ">
@@ -168,7 +168,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
             control={form.control}
             name="playstationEu"
             render={({ field }) => (
-              <FormItem className="bg-muted px-4 rounded-lg py-3">
+              <FormItem className="bg-card shadow-sharp px-4 rounded-lg py-3">
                 <div className="flex flex-row gap-16">
                   <div className="flex-col">
                     <FormLabel className="self-start">Playstation EU</FormLabel>
@@ -190,7 +190,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
             )}
           ></FormField>
 
-          <div className="bg-muted px-4 rounded-lg space-y-2 py-3">
+          <div className="bg-card shadow-sharp px-4 rounded-lg space-y-2 py-3">
             <FormField
               control={form.control}
               name="epic_sso"
@@ -242,7 +242,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
             ></FormField>
           </div>
 
-          <div className="bg-muted px-4 rounded-lg space-y-2 py-3">
+          <div className="bg-card shadow-sharp px-4 rounded-lg space-y-2 py-3">
             <FormField
               control={form.control}
               name="gog_us"
