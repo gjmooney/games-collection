@@ -82,57 +82,54 @@ const StoreCard = ({
   });
 
   return (
-    <div className="relative z-0">
-      <Card className="border w-56 flex items-center justify-center flex-col z-10">
-        <CardHeader>
-          <CardTitle>
-            <div className="flex gap-3 items-center justify-center">
-              <span>
-                {storeName} {region && <span>{region}</span>}
-              </span>
-              {storeName === "Itch.io" && (
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Info className="w-4 h-4" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p className="normal-case">
-                        This only gets the one bundle for now.
-                      </p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              )}
-              {storeName === "Nintendo" && (
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Info className="w-4 h-4" />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p className="normal-case">
-                        Nintendo only save two years of history.
-                      </p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              )}
-            </div>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Button
-            disabled={isLoading}
-            className="w-[80px]"
-            onClick={() => fetchGames()}
-          >
-            {isLoading ? <Loader2 className="animate-spin" /> : "Update"}
-          </Button>
-        </CardContent>
-      </Card>
-      <div className="absolute -right-2 top-0 -z-10 h-[103%] w-[101%] rounded-[2rem] bg-primary rounded-b-2xl" />
-    </div>
+    <Card className="border w-56 flex items-center justify-center flex-col">
+      <CardHeader>
+        <CardTitle>
+          <div className="flex gap-3 items-center justify-center">
+            <span>
+              {storeName} {region && <span>{region}</span>}
+            </span>
+            {storeName === "Itch.io" && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info className="w-4 h-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="normal-case">
+                      This only gets the one bundle for now.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
+            {storeName === "Nintendo" && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info className="w-4 h-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="normal-case">
+                      Nintendo only save two years of history.
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
+          </div>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Button
+          disabled={isLoading}
+          className="w-[80px]"
+          onClick={() => fetchGames()}
+        >
+          {isLoading ? <Loader2 className="animate-spin" /> : "Update"}
+        </Button>
+      </CardContent>
+    </Card>
   );
 };
 
