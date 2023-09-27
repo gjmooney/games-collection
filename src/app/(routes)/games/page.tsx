@@ -1,5 +1,6 @@
 "use client";
 
+import PlatformFilter from "@/components/PlatformFilter";
 import HeaderText from "@/components/animations/HeaderText";
 import GameCard from "@/components/games/GameCard";
 import GamesList from "@/components/games/GamesList";
@@ -11,12 +12,15 @@ import { useUser } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface GamesListPageProps {}
 
 const GamesListPage = ({}: GamesListPageProps) => {
-  const [value, setValue] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [platformFilterValue, setPlatformFilterValue] = useState("");
+  const [filteredResults, setFilteredResults] = useState([]);
+
   const { user } = useUser();
 
   const {
@@ -30,10 +34,10 @@ const GamesListPage = ({}: GamesListPageProps) => {
     enabled: false,
     queryKey: ["search"],
     queryFn: async () => {
-      if (!value) {
+      if (!searchInput) {
         return [];
       }
-      const { data } = await axios.get(`/api/search?q=${value}`);
+      const { data } = await axios.get(`/api/search?q=${searchInput}`);
 
       return data;
     },
@@ -47,6 +51,16 @@ const GamesListPage = ({}: GamesListPageProps) => {
       return data;
     },
   });
+
+  useEffect(() => {
+    const filteredResults =
+      platformFilterValue === "All"
+        ? queryResults
+        : queryResults?.filter(
+            (game: GameInfoSelect) => game.platform === platformFilterValue
+          );
+    setFilteredResults(filteredResults);
+  }, [platformFilterValue, queryResults]);
 
   const request = useDebounceCallback(refetch, 500);
 
@@ -64,30 +78,37 @@ const GamesListPage = ({}: GamesListPageProps) => {
         </span>
       )}
 
-      <Input
-        placeholder="Search for a game..."
-        onChange={(event) => {
-          setValue(event.currentTarget.value);
-          request();
-        }}
-        className="mb-16"
-      />
+      <div className="flex w-full justify-between">
+        <Input
+          placeholder="Search for a game..."
+          onChange={(event) => {
+            setSearchInput(event.currentTarget.value);
+            request();
+          }}
+          className="mb-16 w-[75%] self-start"
+        />
+
+        <PlatformFilter
+          className="w-[20%]"
+          setFilter={setPlatformFilterValue}
+        />
+      </div>
 
       {queryResults?.length > 0 && (
         <p className="-mt-8 mb-4 text-sm text-muted-foreground">
-          {queryResults?.length} results found
+          {filteredResults?.length} results found
         </p>
       )}
 
       <div className="flex flex-wrap gap-9 items-center justify-around">
-        {value.length > 0 ? (
+        {searchInput.length > 0 ? (
           isLoading ? (
             <Loader2 className="animate-spin text-primary" />
           ) : isError ? (
             <p className="text-destructive">Error: {error?.message}</p>
           ) : (
             <>
-              {queryResults?.map((game: GameInfoSelect) => (
+              {filteredResults?.map((game: GameInfoSelect) => (
                 <GameCard
                   key={game.id}
                   gameName={game.gameName}
