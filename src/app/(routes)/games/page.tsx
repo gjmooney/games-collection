@@ -5,10 +5,8 @@ import HeaderText from "@/components/animations/HeaderText";
 import GameCard from "@/components/games/GameCard";
 import GamesList from "@/components/games/GamesList";
 import { Input } from "@/components/ui/input";
-
 import { GameInfoSelect } from "@/db/schema";
 import { useDebounceCallback } from "@/hooks/useDebounce";
-import { useUser } from "@clerk/nextjs";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
@@ -18,10 +16,8 @@ interface GamesListPageProps {}
 
 const GamesListPage = ({}: GamesListPageProps) => {
   const [searchInput, setSearchInput] = useState("");
-  const [platformFilterValue, setPlatformFilterValue] = useState("");
+  const [platformFilterValue, setPlatformFilterValue] = useState("All");
   const [filteredResults, setFilteredResults] = useState([]);
-
-  const { user } = useUser();
 
   const {
     data: queryResults,

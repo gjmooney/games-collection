@@ -14,7 +14,7 @@ interface PlatformFilterProps {
 const PlatformFilter = ({ className, setFilter }: PlatformFilterProps) => {
   return (
     <div className={className}>
-      <Select onValueChange={setFilter}>
+      <Select onValueChange={setFilter} defaultValue="All">
         <SelectTrigger className="">
           <SelectValue placeholder="Platform" />
         </SelectTrigger>
