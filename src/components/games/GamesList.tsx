@@ -2,20 +2,23 @@
 
 import GameCard from "@/components/games/GameCard";
 import { GameInfoSelect } from "@/db/schema";
+import { useDebounceCallback } from "@/hooks/useDebounce";
 import { useIntersection } from "@/hooks/useIntersection";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { Fragment, useEffect, useRef } from "react";
 
-interface GamesListProps {}
+interface GamesListProps {
+  searchInput: string;
+}
 
 type InfiniteQueryResponseData = {
   gamesFromDb: GameInfoSelect[];
   nextCursor: number | null;
 };
 
-const GamesList = ({}: GamesListProps) => {
+const GamesList = ({ searchInput }: GamesListProps) => {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -26,15 +29,23 @@ const GamesList = ({}: GamesListProps) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
+    refetch,
   } = useInfiniteQuery<InfiniteQueryResponseData, Error>({
     queryKey: ["games-list"],
     queryFn: async ({ pageParam = 0 }) => {
-      const gamesListFromDb = await axios.get(`/api/games?cursor=${pageParam}`);
+      let url = `/api/games?search=${searchInput}&cursor=${pageParam}`;
+      const gamesListFromDb = await axios.get(url);
 
       return gamesListFromDb.data;
     },
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
   });
+
+  const request = useDebounceCallback(refetch, 500);
+
+  useEffect(() => {
+    request();
+  }, [searchInput]);
 
   const { ref, entry } = useIntersection({
     root: bottomRef.current,

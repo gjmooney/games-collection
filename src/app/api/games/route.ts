@@ -1,12 +1,12 @@
 import db from "@/db/db";
 import { GameInfoSelect, games, users, usersToGames } from "@/db/schema";
 import { auth } from "@clerk/nextjs";
-import { and, asc, eq, gt } from "drizzle-orm";
+import { and, asc, eq, gt, ilike } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 //TODO: wrap the stuff using search params in a suspense boundary
 //TODO: use prepared statements
-const LIMIT = 10;
+const LIMIT = 20;
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
 
     const { searchParams } = new URL(req.url);
     const cursor = searchParams.get("cursor");
+    const search = searchParams.get("search");
 
     const user = await db
       .select({ id: users.id })
@@ -42,7 +43,8 @@ export async function GET(req: NextRequest) {
         .where(
           and(
             eq(usersToGames.userId, user[0].id),
-            gt(games.id, parseInt(cursor)) // gt is like a skip 1
+            gt(games.id, parseInt(cursor)), // gt is like a skip 1
+            ilike(games.gameName, `%${search}%`)
           )
         )
         .limit(LIMIT);
