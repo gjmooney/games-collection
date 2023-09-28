@@ -8,7 +8,7 @@ import { useIntersection } from "@/hooks/useIntersection";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef } from "react";
 
 interface GamesListProps {
   searchInput: string;
@@ -26,7 +26,6 @@ const GamesList = ({
   platformFilterValue,
   setNumberOfResults,
 }: GamesListProps) => {
-  const [filteredResults, setFilteredResults] = useState<GameInfoSelect[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -41,12 +40,12 @@ const GamesList = ({
   } = useInfiniteQuery<InfiniteQueryResponseData, Error>({
     queryKey: ["games-list"],
     queryFn: async ({ pageParam = 0 }) => {
-      const url = `/api/games?search=${searchInput}&cursor=${pageParam}`;
+      const url = `/api/games?search=${searchInput}&cursor=${pageParam}&platform=${platformFilterValue}`;
       const gamesListFromDb = await axios.get(url);
 
       return gamesListFromDb.data;
     },
-    getNextPageParam: (lastPage) => lastPage?.nextCursor ?? undefined,
+    getNextPageParam: (lastPage, pages) => lastPage?.nextCursor ?? undefined,
   });
 
   const request = useDebounceCallback(refetch, 500);
@@ -58,25 +57,7 @@ const GamesList = ({
 
   useEffect(() => {
     request();
-  }, [request, searchInput]);
-
-  useEffect(() => {
-    const flatGamesList = data?.pages?.flatMap(
-      (page) => page?.gamesFromDb.map((game: GameInfoSelect) => game)
-    );
-
-    const filteredResults =
-      platformFilterValue === "All"
-        ? flatGamesList
-        : flatGamesList?.filter(
-            (game: GameInfoSelect) => game.platform === platformFilterValue
-          );
-
-    if (filteredResults) {
-      setFilteredResults(filteredResults);
-      setNumberOfResults(filteredResults.length);
-    }
-  }, [data?.pages, platformFilterValue]);
+  }, [request, searchInput, platformFilterValue]);
 
   useEffect(() => {
     if (entry?.isIntersecting && !isFetchingNextPage && !!hasNextPage) {
@@ -91,16 +72,22 @@ const GamesList = ({
   ) : status === "error" ? (
     <p>Error: {error?.message}</p>
   ) : (
-    <>
-      {filteredResults.map((game: GameInfoSelect) => (
-        <GameCard
-          key={game.id}
-          gameName={game.gameName}
-          store={game.store}
-          platform={game.platform}
-          imgUrl={game.imgUrl}
-        />
-      ))}
+    <div className="flex flex-col">
+      <div className="flex flex-row flex-wrap gap-9 items-center justify-around">
+        {data?.pages?.map((page, i) => (
+          <Fragment key={i}>
+            {page?.gamesFromDb.map((game: GameInfoSelect) => (
+              <GameCard
+                key={game.id}
+                gameName={game.gameName}
+                store={game.store}
+                platform={game.platform}
+                imgUrl={game.imgUrl}
+              />
+            ))}
+          </Fragment>
+        ))}
+      </div>
 
       {hasNextPage && (
         <div className="flex my-8 justify-center">
@@ -118,7 +105,7 @@ const GamesList = ({
         </div>
       )}
       <div ref={ref} />
-    </>
+    </div>
   );
 };
 
