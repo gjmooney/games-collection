@@ -2,26 +2,20 @@
 
 import PlatformFilter from "@/components/PlatformFilter";
 import HeaderText from "@/components/animations/HeaderText";
-import GameCard from "@/components/games/GameCard";
 import GamesList from "@/components/games/GamesList";
 import { Input } from "@/components/ui/input";
-import { GameInfoSelect } from "@/db/schema";
-import { useDebounceCallback } from "@/hooks/useDebounce";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface GamesListPageProps {}
 
 const GamesListPage = ({}: GamesListPageProps) => {
   const [searchInput, setSearchInput] = useState("");
-  const [searchInputProp, setSearchInputProp] = useState("");
-
+  const [numberOfResults, setNumberOfResults] = useState(0);
   const [platformFilterValue, setPlatformFilterValue] = useState("All");
-  const [filteredResults, setFilteredResults] = useState([]);
 
-  const { data: gameCount, isLoading: gameCountLoading } = useQuery({
+  const { data: gameCount } = useQuery({
     queryKey: ["game-count"],
     queryFn: async () => {
       const { data } = await axios.get("/api/game-count");
@@ -49,7 +43,6 @@ const GamesListPage = ({}: GamesListPageProps) => {
           placeholder="Search for a game..."
           onChange={(event) => {
             setSearchInput(event.currentTarget.value);
-            //request();
           }}
           className="mb-16 w-[75%] self-start"
         />
@@ -60,14 +53,18 @@ const GamesListPage = ({}: GamesListPageProps) => {
         />
       </div>
 
-      {/*  {queryResults?.length > 0 && (
+      {searchInput !== "" && (
         <p className="-mt-8 mb-4 text-sm text-muted-foreground">
-          {filteredResults?.length} results found
+          {numberOfResults} results found
         </p>
-      )} */}
+      )}
 
       <div className="flex flex-wrap gap-9 items-center justify-around">
-        <GamesList searchInput={searchInput} />
+        <GamesList
+          searchInput={searchInput}
+          platformFilterValue={platformFilterValue}
+          setNumberOfResults={setNumberOfResults}
+        />
       </div>
     </main>
   );

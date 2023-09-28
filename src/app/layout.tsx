@@ -1,11 +1,11 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import ClerkProvider from "@/components/providers/ClerkProvider";
 import QueryProvider from "@/components/providers/QueryProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
-
-import ClerkProvider from "@/components/providers/ClerkProvider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -41,6 +41,7 @@ export default function RootLayout({
               <Navbar />
               <div className="flex-auto container">{children}</div>
               <Toaster />
+              <ReactQueryDevtools initialIsOpen={false} />
               <Footer />
             </ThemeProvider>
           </QueryProvider>

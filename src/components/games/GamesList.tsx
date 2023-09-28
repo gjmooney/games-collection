@@ -1,16 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import GameCard from "@/components/games/GameCard";
 import { GameInfoSelect } from "@/db/schema";
 import { useDebounceCallback } from "@/hooks/useDebounce";
 import { useIntersection } from "@/hooks/useIntersection";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface GamesListProps {
   searchInput: string;
+  platformFilterValue: string;
+  setNumberOfResults: (number: number) => void;
 }
 
 type InfiniteQueryResponseData = {
@@ -18,11 +21,13 @@ type InfiniteQueryResponseData = {
   nextCursor: number | null;
 };
 
-const GamesList = ({ searchInput }: GamesListProps) => {
-  const [platformFilterValue, setPlatformFilterValue] = useState("All");
-  const [filteredResults, setFilteredResults] = useState([]);
+const GamesList = ({
+  searchInput,
+  platformFilterValue,
+  setNumberOfResults,
+}: GamesListProps) => {
+  const [filteredResults, setFilteredResults] = useState<GameInfoSelect[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const queryClient = useQueryClient();
 
   const {
     data,
@@ -36,19 +41,15 @@ const GamesList = ({ searchInput }: GamesListProps) => {
   } = useInfiniteQuery<InfiniteQueryResponseData, Error>({
     queryKey: ["games-list"],
     queryFn: async ({ pageParam = 0 }) => {
-      let url = `/api/games?search=${searchInput}&cursor=${pageParam}`;
+      const url = `/api/games?search=${searchInput}&cursor=${pageParam}`;
       const gamesListFromDb = await axios.get(url);
 
       return gamesListFromDb.data;
     },
-    getNextPageParam: (lastPage, pages) => lastPage?.nextCursor ?? undefined,
+    getNextPageParam: (lastPage) => lastPage?.nextCursor ?? undefined,
   });
 
   const request = useDebounceCallback(refetch, 500);
-
-  useEffect(() => {
-    request();
-  }, [searchInput]);
 
   const { ref, entry } = useIntersection({
     root: bottomRef.current,
@@ -56,10 +57,32 @@ const GamesList = ({ searchInput }: GamesListProps) => {
   });
 
   useEffect(() => {
+    request();
+  }, [request, searchInput]);
+
+  useEffect(() => {
+    const flatGamesList = data?.pages?.flatMap(
+      (page) => page?.gamesFromDb.map((game: GameInfoSelect) => game)
+    );
+
+    const filteredResults =
+      platformFilterValue === "All"
+        ? flatGamesList
+        : flatGamesList?.filter(
+            (game: GameInfoSelect) => game.platform === platformFilterValue
+          );
+
+    if (filteredResults) {
+      setFilteredResults(filteredResults);
+      setNumberOfResults(filteredResults.length);
+    }
+  }, [data?.pages, platformFilterValue]);
+
+  useEffect(() => {
     if (entry?.isIntersecting && !isFetchingNextPage && !!hasNextPage) {
       fetchNextPage();
     }
-  }, [entry, fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [entry]);
 
   return status === "loading" ? (
     <p className="animate-spin">
@@ -69,18 +92,14 @@ const GamesList = ({ searchInput }: GamesListProps) => {
     <p>Error: {error?.message}</p>
   ) : (
     <>
-      {data?.pages?.map((page, i) => (
-        <Fragment key={i}>
-          {page?.gamesFromDb.map((game: GameInfoSelect) => (
-            <GameCard
-              key={game.id}
-              gameName={game.gameName}
-              store={game.store}
-              platform={game.platform}
-              imgUrl={game.imgUrl}
-            />
-          ))}
-        </Fragment>
+      {filteredResults.map((game: GameInfoSelect) => (
+        <GameCard
+          key={game.id}
+          gameName={game.gameName}
+          store={game.store}
+          platform={game.platform}
+          imgUrl={game.imgUrl}
+        />
       ))}
 
       {hasNextPage && (

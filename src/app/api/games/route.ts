@@ -1,5 +1,5 @@
 import db from "@/db/db";
-import { GameInfoSelect, games, users, usersToGames } from "@/db/schema";
+import { games, users, usersToGames } from "@/db/schema";
 import { auth } from "@clerk/nextjs";
 import { and, asc, eq, gt, ilike } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,6 +11,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
   try {
+    console.log("games GET");
     const { userId: clerkId } = auth();
 
     if (!clerkId) {
@@ -21,16 +22,12 @@ export async function GET(req: NextRequest) {
     const cursor = searchParams.get("cursor");
     const search = searchParams.get("search");
 
-    /* console.log("req.url", req.url);
-    console.log("cursor", cursor);
-    console.log("search", search); */
-
     const user = await db
       .select({ id: users.id })
       .from(users)
       .where(eq(users.clerkId, clerkId));
 
-    let gamesFromDb: Omit<GameInfoSelect, "createdAt">[] = [];
+    let gamesFromDb = [];
 
     let cursorInt = 0;
     if (cursor && cursor !== "null") {
@@ -56,44 +53,6 @@ export async function GET(req: NextRequest) {
         )
       )
       .limit(LIMIT);
-
-    /* if (cursor) {
-      console.log("if");
-      gamesFromDb = await db
-        .select({
-          id: games.id,
-          gameName: games.gameName,
-          platform: games.platform,
-          imgUrl: games.imgUrl,
-          store: games.store,
-        })
-        .from(usersToGames)
-        .innerJoin(games, eq(usersToGames.gameId, games.id))
-        .orderBy(asc(games.id))
-        .where(
-          and(
-            eq(usersToGames.userId, user[0].id),
-            gt(games.id, cursorInt), // gt is like a skip 1
-            ilike(games.gameName, `%${search}%`)
-          )
-        )
-        .limit(LIMIT);
-    } else {
-      console.log("else");
-      gamesFromDb = await db
-        .select({
-          id: games.id,
-          gameName: games.gameName,
-          platform: games.platform,
-          imgUrl: games.imgUrl,
-          store: games.store,
-        })
-        .from(usersToGames)
-        .innerJoin(games, eq(usersToGames.gameId, games.id))
-        .where(eq(usersToGames.userId, user[0].id))
-        .orderBy(asc(games.id))
-        .limit(LIMIT);
-    } */
 
     let nextCursor = null;
 
