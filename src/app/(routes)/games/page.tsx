@@ -16,28 +16,10 @@ interface GamesListPageProps {}
 
 const GamesListPage = ({}: GamesListPageProps) => {
   const [searchInput, setSearchInput] = useState("");
+  const [searchInputProp, setSearchInputProp] = useState("");
+
   const [platformFilterValue, setPlatformFilterValue] = useState("All");
   const [filteredResults, setFilteredResults] = useState([]);
-
-  const {
-    data: queryResults,
-    isLoading,
-    isError,
-    status,
-    error,
-    refetch,
-  } = useQuery<any, Error>({
-    enabled: false,
-    queryKey: ["search"],
-    queryFn: async () => {
-      if (!searchInput) {
-        return [];
-      }
-      const { data } = await axios.get(`/api/search?q=${searchInput}`);
-
-      return data;
-    },
-  });
 
   const { data: gameCount, isLoading: gameCountLoading } = useQuery({
     queryKey: ["game-count"],
@@ -47,18 +29,6 @@ const GamesListPage = ({}: GamesListPageProps) => {
       return data;
     },
   });
-
-  useEffect(() => {
-    const filteredResults =
-      platformFilterValue === "All"
-        ? queryResults
-        : queryResults?.filter(
-            (game: GameInfoSelect) => game.platform === platformFilterValue
-          );
-    setFilteredResults(filteredResults);
-  }, [platformFilterValue, queryResults]);
-
-  const request = useDebounceCallback(refetch, 500);
 
   return (
     <main className="px-16 flex flex-col items-center justify-center">
@@ -79,7 +49,7 @@ const GamesListPage = ({}: GamesListPageProps) => {
           placeholder="Search for a game..."
           onChange={(event) => {
             setSearchInput(event.currentTarget.value);
-            request();
+            //request();
           }}
           className="mb-16 w-[75%] self-start"
         />
@@ -90,34 +60,14 @@ const GamesListPage = ({}: GamesListPageProps) => {
         />
       </div>
 
-      {queryResults?.length > 0 && (
+      {/*  {queryResults?.length > 0 && (
         <p className="-mt-8 mb-4 text-sm text-muted-foreground">
           {filteredResults?.length} results found
         </p>
-      )}
+      )} */}
 
       <div className="flex flex-wrap gap-9 items-center justify-around">
-        {searchInput.length > 0 ? (
-          isLoading ? (
-            <Loader2 className="animate-spin text-primary" />
-          ) : isError ? (
-            <p className="text-destructive">Error: {error?.message}</p>
-          ) : (
-            <>
-              {filteredResults?.map((game: GameInfoSelect) => (
-                <GameCard
-                  key={game.id}
-                  gameName={game.gameName}
-                  store={game.store}
-                  platform={game.platform}
-                  imgUrl={game.imgUrl}
-                />
-              ))}
-            </>
-          )
-        ) : (
-          <GamesList />
-        )}
+        <GamesList searchInput={searchInput} />
       </div>
     </main>
   );

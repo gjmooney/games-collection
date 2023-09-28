@@ -4,10 +4,10 @@ import GameCard from "@/components/games/GameCard";
 import { GameInfoSelect } from "@/db/schema";
 import { useDebounceCallback } from "@/hooks/useDebounce";
 import { useIntersection } from "@/hooks/useIntersection";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 interface GamesListProps {
   searchInput: string;
@@ -19,7 +19,10 @@ type InfiniteQueryResponseData = {
 };
 
 const GamesList = ({ searchInput }: GamesListProps) => {
+  const [platformFilterValue, setPlatformFilterValue] = useState("All");
+  const [filteredResults, setFilteredResults] = useState([]);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const queryClient = useQueryClient();
 
   const {
     data,
@@ -38,7 +41,7 @@ const GamesList = ({ searchInput }: GamesListProps) => {
 
       return gamesListFromDb.data;
     },
-    getNextPageParam: (lastPage) => lastPage?.nextCursor,
+    getNextPageParam: (lastPage, pages) => lastPage?.nextCursor ?? undefined,
   });
 
   const request = useDebounceCallback(refetch, 500);

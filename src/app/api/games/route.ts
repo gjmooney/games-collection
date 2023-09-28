@@ -21,6 +21,10 @@ export async function GET(req: NextRequest) {
     const cursor = searchParams.get("cursor");
     const search = searchParams.get("search");
 
+    /* console.log("req.url", req.url);
+    console.log("cursor", cursor);
+    console.log("search", search); */
+
     const user = await db
       .select({ id: users.id })
       .from(users)
@@ -28,7 +32,33 @@ export async function GET(req: NextRequest) {
 
     let gamesFromDb: Omit<GameInfoSelect, "createdAt">[] = [];
 
-    if (cursor) {
+    let cursorInt = 0;
+    if (cursor && cursor !== "null") {
+      cursorInt = parseInt(cursor);
+    }
+
+    gamesFromDb = await db
+      .select({
+        id: games.id,
+        gameName: games.gameName,
+        platform: games.platform,
+        imgUrl: games.imgUrl,
+        store: games.store,
+      })
+      .from(usersToGames)
+      .innerJoin(games, eq(usersToGames.gameId, games.id))
+      .orderBy(asc(games.id))
+      .where(
+        and(
+          eq(usersToGames.userId, user[0].id),
+          gt(games.id, cursorInt), // gt is like a skip 1
+          ilike(games.gameName, `%${search}%`)
+        )
+      )
+      .limit(LIMIT);
+
+    /* if (cursor) {
+      console.log("if");
       gamesFromDb = await db
         .select({
           id: games.id,
@@ -43,12 +73,13 @@ export async function GET(req: NextRequest) {
         .where(
           and(
             eq(usersToGames.userId, user[0].id),
-            gt(games.id, parseInt(cursor)), // gt is like a skip 1
+            gt(games.id, cursorInt), // gt is like a skip 1
             ilike(games.gameName, `%${search}%`)
           )
         )
         .limit(LIMIT);
     } else {
+      console.log("else");
       gamesFromDb = await db
         .select({
           id: games.id,
@@ -62,7 +93,7 @@ export async function GET(req: NextRequest) {
         .where(eq(usersToGames.userId, user[0].id))
         .orderBy(asc(games.id))
         .limit(LIMIT);
-    }
+    } */
 
     let nextCursor = null;
 
