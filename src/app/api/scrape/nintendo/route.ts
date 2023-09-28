@@ -60,10 +60,11 @@ export async function GET(req: NextRequest) {
     // Go through rest of pages
     for (let i = 2; i <= 5; i++) {
       console.log("Moving to page ", i);
-      await page.waitForSelector("div.line-clamp-2");
-      const nextPageLink = await page.$(`a[href="/my/transactions/${i}"]`);
 
+      const nextPageLink = await page.$(`a[href="/my/transactions/${i}"]`);
       await nextPageLink?.click();
+
+      await page.waitForSelector("div.line-clamp-2");
 
       // Get the titles
       const currentPageGames = await page.$$eval(
