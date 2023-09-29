@@ -9,8 +9,10 @@ const page = async ({}: pageProps) => {
   //TODO: refactor mutation out here? can share isLoading to disable all buttons
   return (
     <main className="flex flex-col ">
-      <HeaderText title="Update" />
-      <ManualAddForm />
+      <div className="flex">
+        <HeaderText title="Update" className="relative" />
+        <ManualAddForm className="absolute right-0 pr-8 self-center"/>
+      </div>
       <div className="flex flex-row gap-9 items-center flex-wrap justify-around">
         {storeFronts.map(
           (store) =>

@@ -35,9 +35,11 @@ import {
 } from "../ui/select";
 import { toast } from "../ui/use-toast";
 
-interface ManualAddFormProps {}
+interface ManualAddFormProps {
+  className?: string;
+}
 
-const ManualAddForm = ({}: ManualAddFormProps) => {
+const ManualAddForm = ({ className }: ManualAddFormProps) => {
   const [open, setOpen] = useState(false);
 
   const queryClient = useQueryClient();
@@ -116,118 +118,110 @@ const ManualAddForm = ({}: ManualAddFormProps) => {
   }
 
   return (
-    <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
-      <DialogTrigger asChild>
-        <Button className="w-fit">Enter Game</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Enter Game</DialogTitle>
-          <DialogDescription>
-            Manually enter your game info here. Click submit when you&apos;re
-            done.
-          </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid gap-4 py-4">
-              <FormField
-                control={form.control}
-                name="gameName"
-                render={({ field }) => (
-                  <FormItem className="grid grid-cols-4 items-center gap-4">
-                    <FormLabel className="text-right">Title</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter Title..."
-                        className="col-span-3"
-                        {...field}
-                      />
-                    </FormControl>
-
-                    <FormMessage className="col-span-4" />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="platform"
-                render={({ field }) => (
-                  <FormItem className="grid grid-cols-4 items-center gap-4">
-                    <FormLabel className="text-right">Platform</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      value={field.value}
-                    >
-                      <FormControl className="col-span-3">
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a platform" />
-                        </SelectTrigger>
+    <div className={className}>
+      <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
+        <DialogTrigger asChild>
+          <Button className="w-fit" size={"sm"}>
+            Enter Game
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Enter Game</DialogTitle>
+            <DialogDescription>
+              Manually enter your game info here. Click submit when you&apos;re
+              done.
+            </DialogDescription>
+          </DialogHeader>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="grid gap-4 py-4">
+                <FormField
+                  control={form.control}
+                  name="gameName"
+                  render={({ field }) => (
+                    <FormItem className="grid grid-cols-4 items-center gap-4">
+                      <FormLabel className="text-right">Title</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter Title..."
+                          className="col-span-3"
+                          {...field}
+                        />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="PC">PC</SelectItem>
-                        <SelectItem value="Switch">Switch</SelectItem>
-                        <SelectItem value="PS4">PS4</SelectItem>
-                        <SelectItem value="PS5">PS5</SelectItem>
-                      </SelectContent>
-                    </Select>
 
-                    <FormMessage className="col-span-4" />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage className="col-span-4" />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="store"
-                render={({ field }) => (
-                  <FormItem className="grid grid-cols-4 items-center gap-4">
-                    <FormLabel className="text-right">Store</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      value={field.value}
-                    >
-                      <FormControl className="col-span-3">
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a store" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {storeFronts.map((store) => (
-                          <SelectItem key={store.id} value={store.storeName}>
-                            {store.storeName}
-                          </SelectItem>
-                        ))}
-                        {/* <SelectItem value="Steam">Steam</SelectItem>
-                        <SelectItem value="Humble">Humble</SelectItem>
-                        <SelectItem value="GOG">GOG</SelectItem>
-                        <SelectItem value="Epic">Epic</SelectItem>
-                        <SelectItem value="Itch.io">Itch.io</SelectItem>
-                        <SelectItem value="Nintendo">Nintendo</SelectItem>
-                        <SelectItem value="PLaystation US">
-                          PLaystation US
-                        </SelectItem>
-                        <SelectItem value="Playstation EU">
-                          Playstation EU
-                        </SelectItem> */}
-                      </SelectContent>
-                    </Select>
+                <FormField
+                  control={form.control}
+                  name="platform"
+                  render={({ field }) => (
+                    <FormItem className="grid grid-cols-4 items-center gap-4">
+                      <FormLabel className="text-right">Platform</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        value={field.value}
+                      >
+                        <FormControl className="col-span-3">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a platform" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="PC">PC</SelectItem>
+                          <SelectItem value="Switch">Switch</SelectItem>
+                          <SelectItem value="PS4">PS4</SelectItem>
+                          <SelectItem value="PS5">PS5</SelectItem>
+                        </SelectContent>
+                      </Select>
 
-                    <FormMessage className="col-span-4" />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <DialogFooter>
-              <Button type="submit">Submit</Button>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+                      <FormMessage className="col-span-4" />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="store"
+                  render={({ field }) => (
+                    <FormItem className="grid grid-cols-4 items-center gap-4">
+                      <FormLabel className="text-right">Store</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        value={field.value}
+                      >
+                        <FormControl className="col-span-3">
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a store" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {storeFronts.map((store) => (
+                            <SelectItem key={store.id} value={store.storeName}>
+                              {store.storeName}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+
+                      <FormMessage className="col-span-4" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <DialogFooter>
+                <Button type="submit">Submit</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };
 
