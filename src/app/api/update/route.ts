@@ -27,10 +27,12 @@ export async function POST(req: NextRequest) {
       const { gameName, platform, store, imgUrl } =
         InsertGameSchema.parse(game);
 
+      const cleanedGameName = game.gameName.replace(/[™®©]/gm, "");
+
       const insertedGames = await db
         .insert(games)
         .values({
-          gameName: game.gameName,
+          gameName: cleanedGameName,
           platform: game.platform,
           store: game.store,
           imgUrl: game.imgUrl,
