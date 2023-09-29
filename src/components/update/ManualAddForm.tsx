@@ -68,8 +68,14 @@ const ManualAddForm = ({}: ManualAddFormProps) => {
     console.log(values);
   }
 
+  function onOpenChange(open: boolean) {
+    setOpen(open);
+    form.reset();
+    form.clearErrors();
+  }
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
       <DialogTrigger asChild>
         <Button className="w-fit">Enter Game</Button>
       </DialogTrigger>
@@ -82,11 +88,8 @@ const ManualAddForm = ({}: ManualAddFormProps) => {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="grid gap-4 py-4"
-          >
-            <div>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="grid gap-4 py-4">
               <FormField
                 control={form.control}
                 name="gameName"
