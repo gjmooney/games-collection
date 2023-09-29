@@ -68,14 +68,14 @@ const ManualAddForm = ({}: ManualAddFormProps) => {
     console.log(values);
   }
 
-  function onOpenChange(open: boolean) {
+  function onOpenChange() {
     setOpen(open);
     form.reset();
     form.clearErrors();
   }
 
   return (
-    <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <Button className="w-fit">Enter Game</Button>
       </DialogTrigger>
