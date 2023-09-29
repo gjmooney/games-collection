@@ -6,7 +6,7 @@ import GamesList from "@/components/games/GamesList";
 import { Input } from "@/components/ui/input";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface GamesListPageProps {}
 
@@ -24,6 +24,17 @@ const GamesListPage = ({}: GamesListPageProps) => {
     },
   });
 
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        document.getElementById("search-input")!.focus();
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
+
   return (
     <main className="px-16 flex flex-col items-center justify-center">
       <HeaderText title="Collection" className="mb-2" />
@@ -37,13 +48,19 @@ const GamesListPage = ({}: GamesListPageProps) => {
         </span>
       )}
       <div className="flex w-full justify-between">
-        <Input
-          placeholder="Search for a game..."
-          onChange={(event) => {
-            setSearchInput(event.currentTarget.value);
-          }}
-          className="mb-16 w-[75%] self-start"
-        />
+        <div className="relative w-[75%] h-auto">
+          <Input
+            id="search-input"
+            placeholder="Search for a game..."
+            onChange={(event) => {
+              setSearchInput(event.currentTarget.value);
+            }}
+            className="mb-16 "
+          />
+          <kbd className="text-muted-foreground absolute right-3 top-3 text-sm">
+            ⌘K
+          </kbd>
+        </div>
 
         <PlatformFilter
           className="w-[20%]"
