@@ -1,4 +1,5 @@
 import HeaderText from "@/components/animations/HeaderText";
+import ManualAddForm from "@/components/update/ManualAddForm";
 import StoreCard from "@/components/update/StoreCard";
 import { storeFronts } from "@/lib/constants";
 
@@ -9,6 +10,7 @@ const page = async ({}: pageProps) => {
   return (
     <main className="flex flex-col ">
       <HeaderText title="Update" />
+      <ManualAddForm />
       <div className="flex flex-row gap-9 items-center flex-wrap justify-around">
         {storeFronts.map((store) => (
           <StoreCard

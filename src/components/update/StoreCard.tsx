@@ -87,7 +87,7 @@ const StoreCard = ({
         <CardTitle>
           <div className="flex gap-3 items-center justify-center">
             <span>
-              {storeName} {region && <span>{region}</span>}
+              {storeName} {/* {region && <span>{region}</span>} */}
             </span>
             {storeName === "Itch.io" && (
               <TooltipProvider>

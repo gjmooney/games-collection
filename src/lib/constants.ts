@@ -19,14 +19,14 @@ export const storeFronts = [
   },
   {
     id: 4,
-    storeName: "Playstation",
+    storeName: "Playstation US",
     region: "US",
     imageUrl: "",
     apiUrlEndpoint: "playstation-us",
   },
   {
     id: 5,
-    storeName: "Playstation",
+    storeName: "Playstation EU",
     region: "EU",
     imageUrl: "",
     apiUrlEndpoint: "playstation-eu",
