@@ -12,15 +12,18 @@ const page = async ({}: pageProps) => {
       <HeaderText title="Update" />
       <ManualAddForm />
       <div className="flex flex-row gap-9 items-center flex-wrap justify-around">
-        {storeFronts.map((store) => (
-          <StoreCard
-            key={store.id}
-            storeName={store.storeName}
-            imageUrl={store.imageUrl}
-            region={store.region}
-            apiUrlEndpoint={store.apiUrlEndpoint}
-          />
-        ))}
+        {storeFronts.map(
+          (store) =>
+            store.storeName !== "Physical" && (
+              <StoreCard
+                key={store.id}
+                storeName={store.storeName}
+                imageUrl={store.imageUrl}
+                region={store.region}
+                apiUrlEndpoint={store.apiUrlEndpoint}
+              />
+            )
+        )}
       </div>
     </main>
   );

@@ -2,6 +2,8 @@
 
 import { storeFronts } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -31,11 +33,52 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { toast } from "../ui/use-toast";
 
 interface ManualAddFormProps {}
 
 const ManualAddForm = ({}: ManualAddFormProps) => {
   const [open, setOpen] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  const { mutate: addGame, isLoading } = useMutation({
+    mutationFn: async (values: z.infer<typeof formSchema>) => {
+      // save data to db
+      const payload = {
+        data: [values],
+      };
+
+      const numberInserted = await axios.post("/api/update", payload);
+      return numberInserted.data;
+    },
+
+    onError: (error, values) => {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          return toast({
+            title: "There was a problem",
+            description: "You must be logged in",
+            variant: "destructive",
+          });
+        }
+      }
+
+      return toast({
+        title: "There was a problem",
+        description: "Something went wrong, please try again",
+        variant: "destructive",
+      });
+    },
+
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["games-list", "game-count"] });
+      toast({
+        title: "Success",
+        description: `Inserted ${data} games`,
+      });
+    },
+  });
 
   const formSchema = z.object({
     gameName: z.string().min(1),
@@ -56,8 +99,7 @@ const ManualAddForm = ({}: ManualAddFormProps) => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    addGame(values);
     form.reset({
       gameName: "",
       platform: "",
@@ -65,17 +107,16 @@ const ManualAddForm = ({}: ManualAddFormProps) => {
       imgUrl: "",
     });
     setOpen(false);
-    console.log(values);
   }
 
-  function onOpenChange() {
+  function onOpenChange(open: boolean) {
     setOpen(open);
     form.reset();
     form.clearErrors();
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
       <DialogTrigger asChild>
         <Button className="w-fit">Enter Game</Button>
       </DialogTrigger>

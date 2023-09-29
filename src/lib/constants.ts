@@ -49,4 +49,10 @@ export const storeFronts = [
     imageUrl: "",
     apiUrlEndpoint: "gog",
   },
+  {
+    id: 9,
+    storeName: "Physical",
+    imageUrl: "",
+    apiUrlEndpoint: "",
+  },
 ];

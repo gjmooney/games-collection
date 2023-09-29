@@ -15,7 +15,8 @@ export async function POST(req: NextRequest) {
     const { data } = await req.json();
 
     // TODO: this is just for dev
-    const arr = data.splice(0, 4);
+    let arr;
+    data.length > 1 ? (arr = data.splice(0, 4)) : (arr = data);
 
     const user = await db
       .select({ id: users.id })
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    return NextResponse.json(arr.length, { status: 200 });
+    return NextResponse.json(data.length, { status: 200 });
   } catch (error) {
     console.log("error", error);
     return new Response("Could not update database", { status: 500 });
