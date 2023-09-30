@@ -23,6 +23,8 @@ export async function GET(req: NextRequest) {
     const search = searchParams.get("search");
     const platform = searchParams.get("platform");
 
+    console.log("searchParams", searchParams);
+
     const user = await db
       .select({ id: users.id })
       .from(users)
@@ -35,6 +37,7 @@ export async function GET(req: NextRequest) {
       cursorInt = parseInt(cursor);
     }
 
+    console.log("user", user);
     platform && platform !== "All"
       ? (gamesFromDb = await db
           .select({
@@ -83,10 +86,9 @@ export async function GET(req: NextRequest) {
       nextCursor = gamesFromDb[LIMIT - 1].id;
     }
 
-    return NextResponse.json(
-      { gamesFromDb, nextCursor },
-      { status: 200 }
-    );
+    console.log("gamesFromDb[0]", gamesFromDb[0]);
+
+    return NextResponse.json({ gamesFromDb, nextCursor }, { status: 200 });
   } catch (error) {
     console.log("error", error);
   }
