@@ -39,13 +39,13 @@ const GamesListPage = ({}: GamesListPageProps) => {
     <main className="px-16 flex flex-col items-center justify-center">
       <HeaderText title="Collection" className="mb-2" />
       {gameCount ? (
-        <span className="w-fit mx-auto mb-16 text-sm text-muted-foreground">
+        <h2 className="w-fit mx-auto mb-16 text-sm text-muted-foreground">
           {gameCount} games in your collection.
-        </span>
+        </h2>
       ) : (
-        <span>
+        <h2>
           <div className="w-[186px] h-[20px] mb-14" />
-        </span>
+        </h2>
       )}
       <div className="flex w-full justify-between">
         <div className="relative w-[75%] h-auto">

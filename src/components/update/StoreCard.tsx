@@ -93,6 +93,9 @@ const StoreCard = ({
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
+                    <div className="sr-only">
+                      Itch.io only gets the one bundle for now.
+                    </div>
                     <Info className="w-4 h-4" />
                   </TooltipTrigger>
                   <TooltipContent>
@@ -107,6 +110,9 @@ const StoreCard = ({
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
+                    <div className="sr-only">
+                      Nintendo only save two years of history.
+                    </div>
                     <Info className="w-4 h-4" />
                   </TooltipTrigger>
                   <TooltipContent>

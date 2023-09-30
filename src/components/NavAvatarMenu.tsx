@@ -20,8 +20,9 @@ const NavAvatarMenu = async ({}: NavAvatarMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
+        <div className="sr-only">menu</div>
         <Avatar>
-          <AvatarImage src={user?.imageUrl} />
+          <AvatarImage src={user?.imageUrl} alt="profile avatar" />
           <AvatarFallback className="capitalize">
             {user?.username?.slice(0, 2)}
           </AvatarFallback>

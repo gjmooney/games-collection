@@ -8,11 +8,14 @@ interface pageProps {}
 const page = async ({}: pageProps) => {
   //TODO: refactor mutation out here? can share isLoading to disable all buttons
   return (
-    <main className="flex flex-col ">
+    <main className="px-16 flex flex-col items-center justify-center">
       <div className="flex">
-        <HeaderText title="Update" className="relative" />
-        <ManualAddForm className="absolute right-0 pr-8 self-center"/>
+        <HeaderText title="Update" className="relative mb-2" />
+        <ManualAddForm className="absolute right-0 pr-8 self-center" />
       </div>
+      <h2 className="w-fit mx-auto mb-16 text-sm text-muted-foreground">
+        Update your game library here.
+      </h2>
       <div className="flex flex-row gap-9 items-center flex-wrap justify-around">
         {storeFronts.map(
           (store) =>
