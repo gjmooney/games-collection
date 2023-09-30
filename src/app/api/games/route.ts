@@ -248,7 +248,7 @@ export async function GET(req: NextRequest) {
     const gamesFromDb = query;
     // aka there is a next page
     if (gamesFromDb.length === LIMIT) {
-      nextCursor = gamesFromDb[LIMIT - 1];
+      nextCursor = gamesFromDb[LIMIT - 1].id;
     }
     //console.log("gamesFromDb[0]", gamesFromDb);
     console.log("query", query);
