@@ -105,9 +105,7 @@ const GamesList = ({
           )}
         </div>
       )}
-      <div ref={ref} className="bg-emerald-600">
-        boody
-      </div>
+      <div ref={ref} />
     </div>
   );
 };
