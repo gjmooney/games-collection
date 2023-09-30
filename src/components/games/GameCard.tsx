@@ -13,11 +13,11 @@ interface GameCardProps {
  * so check on that in the future.
  */
 const GameCard = ({ gameName, imgUrl, platform, store }: GameCardProps) => {
-  // strip punctuation, collapse spaces, and replace spaces with dashes
+  // strip punctuation, and replace spaces with dashes
   const nameForLink = gameName
     .replace(/[.,\/#!$%\^&\*;:{}='_`~()]/g, "")
-    .replace(/\s{2,}/g, " ")
-    .replace(/ /g, "-")
+    .trim()
+    .replace(/\s{2,}/g, "-")
     .toLowerCase();
 
   return (
