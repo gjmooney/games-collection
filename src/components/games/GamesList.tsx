@@ -49,6 +49,7 @@ const GamesList = ({
   });
 
   const request = useDebounceCallback(refetch, 500);
+  const fetchNextPageDebounce = useDebounceCallback(fetchNextPage, 500);
 
   const { ref, entry } = useIntersection({
     root: bottomRef.current,
@@ -61,7 +62,7 @@ const GamesList = ({
 
   useEffect(() => {
     if (entry?.isIntersecting && !isFetchingNextPage && !!hasNextPage) {
-      fetchNextPage();
+      fetchNextPageDebounce();
     }
   }, [entry]);
 
@@ -104,7 +105,9 @@ const GamesList = ({
           )}
         </div>
       )}
-      <div ref={ref} />
+      <div ref={ref} className="bg-emerald-600">
+        boody
+      </div>
     </div>
   );
 };
