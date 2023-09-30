@@ -1,7 +1,7 @@
-import db from "@/db/db";
-import { games, users, usersToGames } from "@/db/schema";
+import db, { getGamesSql } from "@/db/db";
+import { users } from "@/db/schema";
 import { auth } from "@clerk/nextjs";
-import { and, asc, eq, gt, ilike } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { QueryBuilder } from "drizzle-orm/pg-core";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const cursor = searchParams.get("cursor");
     const search = searchParams.get("search");
-    const platform = searchParams.get("platform");
+    let platform = searchParams.get("platform");
 
     const user = await db
       .select({ id: users.id })
@@ -33,92 +33,24 @@ export async function GET(req: NextRequest) {
     let cursorInt = 0;
     if (cursor && cursor !== "null") {
       cursorInt = parseInt(cursor);
+      if (isNaN(cursorInt)) {
+        return NextResponse.json(
+          { error: "The DB cursor broke. Try again" },
+          { status: 500 }
+        );
+      }
     }
 
-    let gamesFromDb;
-
-    if (platform && platform !== "All" && search) {
-      gamesFromDb = await db
-        .select({
-          id: games.id,
-          gameName: games.gameName,
-          platform: games.platform,
-          imgUrl: games.imgUrl,
-          store: games.store,
-        })
-        .from(usersToGames)
-        .innerJoin(games, eq(usersToGames.gameId, games.id))
-        .orderBy(asc(games.id))
-        .where(
-          and(
-            eq(usersToGames.userId, user[0].id),
-            ilike(games.gameName, `%${search}%`),
-            eq(games.platform, platform),
-            gt(games.id, cursorInt) // gt is like a skip 1
-          )
-        )
-        .limit(LIMIT);
-    } else if (platform == "All" && search) {
-      gamesFromDb = await db
-        .select({
-          id: games.id,
-          gameName: games.gameName,
-          platform: games.platform,
-          imgUrl: games.imgUrl,
-          store: games.store,
-        })
-        .from(usersToGames)
-        .innerJoin(games, eq(usersToGames.gameId, games.id))
-        .orderBy(asc(games.id))
-        .where(
-          and(
-            eq(usersToGames.userId, user[0].id),
-            ilike(games.gameName, `%${search}%`),
-            gt(games.id, cursorInt) // gt is like a skip 1
-          )
-        )
-        .limit(LIMIT);
-    } else if (platform && platform !== "All" && !search) {
-      gamesFromDb = await db
-        .select({
-          id: games.id,
-          gameName: games.gameName,
-          platform: games.platform,
-          imgUrl: games.imgUrl,
-          store: games.store,
-        })
-        .from(usersToGames)
-        .innerJoin(games, eq(usersToGames.gameId, games.id))
-        .orderBy(asc(games.id))
-        .where(
-          and(
-            eq(usersToGames.userId, user[0].id),
-            eq(games.platform, platform),
-            gt(games.id, cursorInt) // gt is like a skip 1
-          )
-        )
-        .limit(LIMIT);
-    } else {
-      // no platform filter and no search (default)
-      gamesFromDb = await db
-        .select({
-          id: games.id,
-          gameName: games.gameName,
-          platform: games.platform,
-          imgUrl: games.imgUrl,
-          store: games.store,
-        })
-        .from(usersToGames)
-        .innerJoin(games, eq(usersToGames.gameId, games.id))
-        .orderBy(asc(games.id))
-        .where(
-          and(
-            eq(usersToGames.userId, user[0].id),
-            gt(games.id, cursorInt) // gt is like a skip 1
-          )
-        )
-        .limit(LIMIT);
+    if (!platform) {
+      platform = "All";
     }
+
+    const gamesFromDb = await getGamesSql(
+      user[0].id,
+      platform,
+      cursorInt,
+      search
+    );
 
     let nextCursor = null;
 
@@ -130,5 +62,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ gamesFromDb, nextCursor }, { status: 200 });
   } catch (error) {
     console.log("error", error);
+    return NextResponse.json(
+      { error: "Stop playing around fool" },
+      { status: 500 }
+    );
   }
 }
