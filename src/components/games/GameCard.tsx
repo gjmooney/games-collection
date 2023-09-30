@@ -20,7 +20,6 @@ const GameCard = ({ gameName, imgUrl, platform, store }: GameCardProps) => {
     .replace(/ /g, "-")
     .toLowerCase();
 
-  console.log("nameForLink", nameForLink);
   return (
     <Link href={`https://www.igdb.com/games/${nameForLink}`}>
       <Card>
