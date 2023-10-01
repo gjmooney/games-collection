@@ -11,7 +11,6 @@ const page = async ({}: pageProps) => {
     <main className="px-16 flex flex-col items-center justify-center">
       <div className="flex">
         <HeaderText title="Update" className="relative mb-2" />
-        <ManualAddForm className="absolute right-0 pr-8 self-center" />
       </div>
       <h2 className="w-fit mx-auto mb-16 text-sm text-muted-foreground">
         Update your game library here.
@@ -30,6 +29,7 @@ const page = async ({}: pageProps) => {
             )
         )}
       </div>
+      <ManualAddForm className="mt-16 text-center w-full" />
     </main>
   );
 };

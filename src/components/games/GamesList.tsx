@@ -38,6 +38,7 @@ const GamesList = ({
     isFetchingNextPage,
     refetch,
   } = useInfiniteQuery<InfiniteQueryResponseData, Error>({
+    staleTime: Infinity,
     queryKey: ["games-list"],
     queryFn: async ({ pageParam = 0 }) => {
       const url = `/api/games?search=${searchInput}&cursor=${pageParam}&platform=${platformFilterValue}`;

@@ -121,7 +121,7 @@ const ManualAddForm = ({ className }: ManualAddFormProps) => {
     <div className={className}>
       <Dialog open={open} onOpenChange={(open) => onOpenChange(open)}>
         <DialogTrigger asChild>
-          <Button className="w-fit" size={"sm"}>
+          <Button className="w-[60%]" size={"sm"}>
             Enter Game
           </Button>
         </DialogTrigger>
