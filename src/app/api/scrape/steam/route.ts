@@ -1,3 +1,4 @@
+import { getDecryptedCookie } from "@/db/db";
 import { GameInfoInsert } from "@/db/schema";
 import { steamApiValidator } from "@/lib/validators";
 import { auth } from "@clerk/nextjs";
@@ -13,10 +14,16 @@ export async function GET(req: NextRequest) {
       return new Response("Unauthorized", { status: 401 });
     }
 
+    let decodedCookie = "";
+    try {
+      decodedCookie = await getDecryptedCookie(userId, "steam");
+    } catch (error) {
+      return new Response("Cookie not found", { status: 404 });
+    }
+
     const response = await axios.get(
       `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process
-        .env.STEAM_API_KEY!}&steamid=${process.env
-        .STEAM_ID!}&include_appinfo=true`
+        .env.STEAM_API_KEY!}&steamid=${decodedCookie}&include_appinfo=true`
     );
 
     const data = response.data.response;

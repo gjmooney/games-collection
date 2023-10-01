@@ -69,6 +69,19 @@ const StoreCard = ({
             ),
           });
         }
+
+        if (error.response?.status === 404) {
+          return toast({
+            title: `No Cookie`,
+            description: "The required cookie was not found.",
+            variant: "destructive",
+            action: (
+              <ToastAction altText="manage cookies" asChild>
+                <Link href="/manage-cookies">Manage</Link>
+              </ToastAction>
+            ),
+          });
+        }
       }
 
       return toast({

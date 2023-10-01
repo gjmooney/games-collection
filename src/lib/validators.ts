@@ -21,6 +21,7 @@ export const itchIoApiValidator = z.object({
 });
 
 export const cookieFormValidator = z.object({
+  steam: z.string(),
   humble: z.string(),
   nintendo: z.string(),
   playstationUs: z.string(),

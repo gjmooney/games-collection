@@ -34,6 +34,7 @@ const CookiesForm = ({}: CookiesFormProps) => {
   const form = useForm<CookieNamesType>({
     resolver: zodResolver(cookieFormValidator),
     defaultValues: {
+      steam: "",
       humble: "",
       nintendo: "",
       playstationUs: "",
@@ -87,6 +88,31 @@ const CookiesForm = ({}: CookiesFormProps) => {
           })}
           className="space-y-8 w-[70%] flex flex-col"
         >
+          <FormField
+            control={form.control}
+            name="steam"
+            render={({ field }) => (
+              <FormItem className="bg-card shadow-sharp px-4 rounded-lg py-3">
+                <div className="flex flex-row gap-16">
+                  <div className="flex-col">
+                    <FormLabel className="self-start ">Steam</FormLabel>
+                    <FormDescription className="self-end w-32">
+                      steamId
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Input
+                      className="self-center"
+                      placeholder="Enter Cookie Value..."
+                      {...field}
+                    />
+                  </FormControl>
+                </div>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          ></FormField>
           <FormField
             control={form.control}
             name="humble"
