@@ -10,7 +10,7 @@ const page = async ({}: pageProps) => {
   return (
     <main className="px-16 flex flex-col items-center justify-center">
       <div className="flex">
-        <HeaderText title="Update" className="relative mb-2" />
+        <HeaderText title="Update" className="mb-2" />
       </div>
       <h2 className="w-fit mx-auto mb-16 text-sm text-muted-foreground">
         Update your game library here.

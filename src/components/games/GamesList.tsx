@@ -68,7 +68,7 @@ const GamesList = ({
   }, [entry]);
 
   return status === "loading" ? (
-    <p className="animate-spin">
+    <p className="animate-spin w-fit mx-auto">
       <Loader2 />
     </p>
   ) : status === "error" ? (

@@ -44,7 +44,7 @@ const GamesListPage = ({}: GamesListPageProps) => {
         </h2>
       ) : (
         <h2>
-          <div className="w-[186px] h-[20px] mb-14" />
+          <div className="w-[186px] h-[20px] mb-16" />
         </h2>
       )}
       <div className="flex w-full justify-between">
@@ -75,13 +75,13 @@ const GamesListPage = ({}: GamesListPageProps) => {
         </p>
       )} */
       }
-      <>
+      <div className="w-full">
         <GamesList
           searchInput={searchInput}
           platformFilterValue={platformFilterValue}
           setNumberOfResults={setNumberOfResults}
         />
-      </>
+      </div>
     </main>
   );
 };
