@@ -17,7 +17,7 @@ const GameCard = ({ gameName, imgUrl, platform, store }: GameCardProps) => {
   const nameForLink = gameName
     .replace(/[.,\/#!$%\^&\*;:{}='_`~()]/g, "")
     .trim()
-    .replace(/\s{2,}/g, "-")
+    .replace(/\s{1,}/g, "-")
     .toLowerCase();
 
   return (
