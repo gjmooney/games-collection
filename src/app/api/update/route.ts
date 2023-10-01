@@ -15,16 +15,17 @@ export async function POST(req: NextRequest) {
     const { data } = await req.json();
 
     // : this is just for dev
-    let arr;
-    data.length > 4 ? (arr = data.splice(0, 4)) : (arr = data);
+    /* let arr;
+    data.length > 4 ? (arr = data.splice(0, 4)) : (arr = data); */
 
     const user = await db
       .select({ id: users.id })
       .from(users)
       .where(eq(users.clerkId, clerkId));
 
+    let numberOfGamesInserted = 0;
     // TODO: pretty sure this should be in a transaction
-    for (const game of arr) {
+    for (const game of data) {
       const { gameName, platform, store, imgUrl } =
         InsertGameSchema.parse(game);
 
@@ -46,9 +47,11 @@ export async function POST(req: NextRequest) {
           .insert(usersToGames)
           .values({ gameId: insertedGames[0].gameId, userId: user[0].id });
       }
+
+      numberOfGamesInserted++;
     }
 
-    return NextResponse.json(data.length, { status: 200 });
+    return NextResponse.json(numberOfGamesInserted, { status: 200 });
   } catch (error) {
     console.log("error", error);
     return new Response("Could not update database", { status: 500 });
