@@ -11,7 +11,7 @@ type PlaystationScrape = {
     url: string;
   };
 };
-// TODO toast
+
 export async function GET(req: NextRequest) {
   try {
     const { userId } = auth();

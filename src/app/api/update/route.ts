@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     const { data } = await req.json();
 
-    // TODO: this is just for dev
+    // : this is just for dev
     let arr;
     data.length > 4 ? (arr = data.splice(0, 4)) : (arr = data);
 
