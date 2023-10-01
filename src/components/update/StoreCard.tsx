@@ -5,8 +5,10 @@ import { GameInfoInsert } from "@/db/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { Info, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { ToastAction } from "../ui/toast";
 import {
   Tooltip,
   TooltipContent,
@@ -55,12 +57,16 @@ const StoreCard = ({
           });
         }
 
-        //TODO: add link to manage cookie page
         if (error.response?.status === 403) {
           return toast({
-            title: `${storeName} says: "${error.response.data}"`,
+            title: `Access denied`,
             description: "Your cookie probably expired.",
             variant: "destructive",
+            action: (
+              <ToastAction altText="manage cookies" asChild>
+                <Link href="/manage-cookies">Manage Cookies</Link>
+              </ToastAction>
+            ),
           });
         }
       }
