@@ -4,7 +4,6 @@ import { CookieNamesType } from "@/lib/validators";
 import { neon, neonConfig } from "@neondatabase/serverless";
 import { and, asc, eq, gt, ilike } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/neon-http";
-import { QueryBuilder } from "drizzle-orm/pg-core";
 
 neonConfig.fetchConnectionCache = true;
 
@@ -35,7 +34,7 @@ export async function getDecryptedCookie(
   return decodedCookie;
 }
 
-export async function getGamesSql(
+export async function getGamesFromDb(
   userId: number,
   platform: string,
   cursorInt: number,

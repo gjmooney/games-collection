@@ -1,4 +1,4 @@
-import db, { getGamesSql } from "@/db/db";
+import db, { getGamesFromDb } from "@/db/db";
 import { users } from "@/db/schema";
 import { auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
       platform = "All";
     }
 
-    const gamesFromDb = await getGamesSql(
+    const gamesFromDb = await getGamesFromDb(
       user[0].id,
       platform,
       cursorInt,
